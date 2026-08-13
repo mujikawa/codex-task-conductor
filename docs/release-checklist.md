@@ -25,10 +25,20 @@ returned `Skill is valid!` in an isolated environment with PyYAML.
 
 ## Clean-room installation
 
-- [ ] Install from the exact Git commit or tag intended for release into a clean Codex environment.
-- [ ] Restart or reload the client and confirm `$task-conductor` is discoverable.
-- [ ] Ask it to summarize authorization, durable tracker, isolation, topology, and acceptance rules without dispatching work.
-- [ ] Confirm uninstalling or disabling the skill leaves no repository policy behind.
+- [x] Install from the exact Git commit or tag intended for release into a clean Codex environment.
+- [x] Restart or reload the client and confirm `$task-conductor` is discoverable.
+- [x] Ask it to summarize authorization, durable tracker, isolation, topology, and acceptance rules without dispatching work.
+- [x] Confirm uninstalling or disabling the skill leaves no repository policy behind.
+
+Clean-room evidence (2026-08-13): the installer downloaded commit
+`63c306b9d66711e4487e1f7eb1a8233932387aaa` into an isolated repository skill
+scope. The installed tree matched all 10 committed blobs and passed the official
+validator. A fresh ephemeral Codex CLI 0.147.0 process using `gpt-5.6-sol` with
+reasoning effort `none` explicitly invoked the skill, loaded its `SKILL.md`,
+summarized every requested boundary, and performed no tool call or dispatch. The
+process reported 7,062 tokens and 13.614 seconds wall-clock; this is recognition
+smoke-test telemetry, not delivery-performance evidence. Removing the
+repository-scoped skill link left no instruction or governance file behind.
 
 ## Operational pilots
 
@@ -55,5 +65,4 @@ returned `Skill is valid!` in an isolated environment with PyYAML.
 
 ## Current v0.1.0-preview blockers
 
-- Fresh clean-room installation and recognition have not yet been recorded.
 - Controlled two-worker parallel execution has not yet been validated.
