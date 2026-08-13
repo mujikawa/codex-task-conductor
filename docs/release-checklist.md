@@ -49,7 +49,7 @@ returned `Skill is valid!` in an isolated environment with PyYAML.
 ## Publication
 
 - [ ] Choose the release level honestly: `preview` while clean-room or parallel validation remains pending; stable only after the claimed capabilities pass.
-- [ ] Replace installation placeholders with the canonical public GitHub URL.
+- [x] Replace installation placeholders with the canonical public GitHub URL.
 - [ ] Create a signed or annotated version tag and GitHub release notes from `CHANGELOG.md`.
 - [ ] Reinstall from the published tag and repeat the recognition smoke test.
 

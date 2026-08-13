@@ -68,7 +68,8 @@ Copy and tailor the [task-governance template](skills/task-conductor/assets/task
 
 ## Installation
 
-After this repository is public, ask Codex to use `$skill-installer` to install the `skills/task-conductor` directory from its GitHub URL. Until then, copy that directory into a Codex skill directory supported by your environment.
+Ask Codex to use `$skill-installer` to install the `skills/task-conductor`
+directory from [mujikawa/codex-task-conductor](https://github.com/mujikawa/codex-task-conductor).
 
 Restart or reload Codex after installation, then open a fresh task and ask:
 
