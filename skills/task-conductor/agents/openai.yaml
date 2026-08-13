@@ -1,0 +1,4 @@
+interface:
+  display_name: "Task Conductor"
+  short_description: "Conduct bounded Codex tasks with isolated worktrees"
+  default_prompt: "Use $task-conductor to coordinate this tracked delivery with bounded tasks and evidence-based acceptance."

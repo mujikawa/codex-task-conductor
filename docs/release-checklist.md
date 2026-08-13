@@ -1,0 +1,59 @@
+# Release checklist
+
+Use this checklist for a preview or stable Task Conductor release. Record failures as release blockers; do not turn an unverified capability into a claim.
+
+## Repository hygiene
+
+- [x] `README.md`, `CHANGELOG.md`, `LICENSE`, adoption guidance, and the case study agree on the release status.
+- [x] Skill frontmatter has only `name` and `description`, and the name is `task-conductor`.
+- [x] No session IDs, raw conversation logs, credentials, private repository names, customer data, or production details are tracked.
+- [x] Examples use placeholders and do not imply authorization to create tasks or mutate external systems.
+- [x] `git diff --check` passes and the intended release files are the only changed files.
+
+Hygiene evidence (2026-08-13): all 17 intended public files were scanned because
+the repository still had an unborn `HEAD`; `.codex-cache/` remained ignored.
+
+## Skill validation
+
+- [x] Run the current official skill validator against `skills/task-conductor`.
+- [x] Resolve every schema or YAML error; do not skip validation because a local dependency is missing.
+- [x] Confirm every relative link and required reference resolves from `SKILL.md`.
+- [x] Confirm `agents/openai.yaml` still describes the same trigger boundary as `SKILL.md`.
+
+Validation evidence (2026-08-13): the bundled official `quick_validate.py`
+returned `Skill is valid!` in an isolated environment with PyYAML.
+
+## Clean-room installation
+
+- [ ] Install from the exact Git commit or tag intended for release into a clean Codex environment.
+- [ ] Restart or reload the client and confirm `$task-conductor` is discoverable.
+- [ ] Ask it to summarize authorization, durable tracker, isolation, topology, and acceptance rules without dispatching work.
+- [ ] Confirm uninstalling or disabling the skill leaves no repository policy behind.
+
+## Operational pilots
+
+- [ ] Complete one serial independent-task pilot from a fresh coordinator context.
+- [ ] Verify the worker is a user-owned independent task, not a background subagent.
+- [ ] Exercise a task-creation failure and confirm the coordinator stops instead of changing topology.
+- [ ] For a multi-dispatch pilot, confirm the creation operation and returned independent task ID separately for every worker.
+- [ ] Exercise an out-of-range inventory request and confirm it is reported as `unknown` ownership, then safely retried within the active runtime bound.
+- [ ] Confirm ownership uses recent inventory, known task IDs, Git state, and the durable tracker rather than one bounded list alone.
+- [ ] Exercise an ambiguous saved-project mapping and confirm destination failure remains separate from inventory and ownership results.
+- [ ] Resolve an ambiguous destination by explicit selection, refresh it before dispatch, and confirm cleanup is not incorrectly required when every ownership source is `clear`.
+- [ ] Exercise asynchronous task creation and confirm a client-side handle does not trigger a duplicate creation request or subagent fallback.
+- [ ] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
+- [ ] Supply a formal task ID through an independent trusted surface and confirm destination, title, repository, branch, and worktree metadata are verified before monitoring.
+- [ ] Capture a fixed start, cutoff, included roots/descendants, outcome states, model/effort, token categories, and elapsed-time definition.
+- [ ] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
+
+## Publication
+
+- [ ] Choose the release level honestly: `preview` while clean-room or parallel validation remains pending; stable only after the claimed capabilities pass.
+- [ ] Replace installation placeholders with the canonical public GitHub URL.
+- [ ] Create a signed or annotated version tag and GitHub release notes from `CHANGELOG.md`.
+- [ ] Reinstall from the published tag and repeat the recognition smoke test.
+
+## Current v0.1.0-preview blockers
+
+- Fresh clean-room installation and recognition have not yet been recorded.
+- Controlled two-worker parallel execution has not yet been validated.
