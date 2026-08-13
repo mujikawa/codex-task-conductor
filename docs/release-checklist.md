@@ -44,14 +44,14 @@ repository-scoped skill link left no instruction or governance file behind.
 
 - [x] Complete one serial independent-task pilot from a fresh coordinator context.
 - [x] Verify the worker is a user-owned independent task, not a background subagent.
-- [ ] Exercise a task-creation failure and confirm the coordinator stops instead of changing topology.
-- [ ] For a multi-dispatch pilot, confirm the creation operation and returned independent task ID separately for every worker.
+- [x] Exercise a task-creation failure and confirm the coordinator stops instead of changing topology.
+- [x] For a multi-dispatch pilot, confirm the creation operation and returned independent task ID separately for every worker.
 - [x] Exercise an out-of-range inventory request and confirm it is reported as `unknown` ownership, then safely retried within the active runtime bound.
 - [x] Confirm ownership uses recent inventory, known task IDs, Git state, and the durable tracker rather than one bounded list alone.
 - [x] Exercise an ambiguous saved-project mapping and confirm destination failure remains separate from inventory and ownership results.
 - [x] Resolve an ambiguous destination by explicit selection, refresh it before dispatch, and confirm cleanup is not incorrectly required when every ownership source is `clear`.
 - [x] Exercise asynchronous task creation and confirm a client-side handle does not trigger a duplicate creation request or subagent fallback.
-- [ ] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
+- [x] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
 - [x] Supply a formal task ID through an independent trusted surface and confirm destination, title, repository, branch, and worktree metadata are verified before monitoring.
 - [x] Capture a fixed start, cutoff, included roots/descendants, outcome states, model/effort, token categories, and elapsed-time definition.
 - [ ] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
@@ -62,8 +62,33 @@ exercise covered the bounded inventory retry, separate destination and inventory
 failures, multi-source ownership, explicit destination selection, one asynchronous
 creation request, and externally supplied formal-ID verification. Pilot 2
 completed one serial user-owned worker and reviewer flow through independent
-acceptance. The historical runs did not pass the three unchecked failure-path
-checks above; rules added after retrospective analysis are not execution evidence.
+acceptance. The historical runs did not pass the three failure-path checks later
+closed by the separate controlled exercise below; rules added after retrospective
+analysis were not treated as execution evidence by themselves.
+
+Failure-path evidence (2026-08-13): a controlled invalid-destination request was
+rejected without creating a task; the coordinator stopped that dispatch path and
+did not substitute another topology. Two later read-only independent reviewers
+were dispatched serially from the same pinned commit into separate clean detached
+worktrees. Each successful creation first returned a client-side handle, remained
+absent from an immediate bounded inventory snapshot, and surfaced under a formal
+task ID after a later snapshot. The coordinator reported `creation accepted /
+formal ID unresolved / execution unknown`, submitted each creation request once,
+and verified each formal task and worktree independently. A malformed project ID
+on the second reviewer was retried exactly once only after refreshing the unique
+destination and confirming that the failed request created nothing. The first
+reviewer required one same-outcome follow-up because the coordinator supplied an
+incomplete canonical path; the worker stopped rather than expanding scope.
+
+The measurement window ran from explicit authorization at
+`2026-08-13T06:14:52+08:00` through independent evidence verification at
+`2026-08-13T06:21:28+08:00` (6m 36s wall-clock). Aggregate reported usage was
+4,899,004 tokens: 4,884,244 input, including 4,776,448 cached input, plus 14,760
+output; reasoning output was a 4,109-token subset. The coordinator used 4,595,093
+incremental tokens, while the two reviewer roots used 232,271 and 71,640. This
+failure-path observation reused a long-running coordinator, so its 93.8% share is
+not a fresh-context baseline or evidence about normal delivery efficiency. Active
+model time and tool-wait time were unavailable.
 
 ## Publication
 
@@ -74,7 +99,4 @@ checks above; rules added after retrospective analysis are not execution evidenc
 
 ## Current v0.1.0-preview blockers
 
-- Stop-on-creation-failure behavior has not yet been revalidated after the topology fallback defect.
-- Per-dispatch creation-operation and independent-task-ID verification has not yet passed a fresh multi-dispatch pilot.
-- The corrected `formal ID unresolved / execution unknown` report has not yet been reproduced in a fresh correlation-race exercise.
 - Controlled two-worker parallel execution has not yet been validated.
