@@ -51,7 +51,7 @@ repository-scoped skill link left no instruction or governance file behind.
 - [x] Exercise an ambiguous saved-project mapping and confirm destination failure remains separate from inventory and ownership results.
 - [x] Resolve an ambiguous destination by explicit selection, refresh it before dispatch, and confirm cleanup is not incorrectly required when every ownership source is `clear`.
 - [x] Exercise asynchronous task creation and confirm a client-side handle does not trigger a duplicate creation request or subagent fallback.
-- [x] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
+- [ ] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
 - [x] Supply a formal task ID through an independent trusted surface and confirm destination, title, repository, branch, and worktree metadata are verified before monitoring.
 - [x] Capture a fixed start, cutoff, included roots/descendants, outcome states, model/effort, token categories, and elapsed-time definition.
 - [ ] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
@@ -72,13 +72,17 @@ did not substitute another topology. Two later read-only independent reviewers
 were dispatched serially from the same pinned commit into separate clean detached
 worktrees. Each successful creation first returned a client-side handle, remained
 absent from an immediate bounded inventory snapshot, and surfaced under a formal
-task ID after a later snapshot. The coordinator reported `creation accepted /
-formal ID unresolved / execution unknown`, submitted each creation request once,
-and verified each formal task and worktree independently. A malformed project ID
-on the second reviewer was retried exactly once only after refreshing the unique
-destination and confirming that the failed request created nothing. The first
-reviewer required one same-outcome follow-up because the coordinator supplied an
-incomplete canonical path; the worker stopped rather than expanding scope.
+task ID after a later snapshot. This proves correct unknown-state and no-duplicate
+handling, but it does not prove that the formal task records already existed during
+the first omissions. A separate fresh attempt authorized after the measurement
+cutoff found its formal task in the first bounded inventory snapshot, so the exact
+formal-task-exists/inventory-omits race remains unverified. The coordinator
+submitted each creation request once and verified each resolved formal task and
+worktree independently. A malformed project ID on the second reviewer was retried
+exactly once only after refreshing the unique destination and confirming that the
+failed request created nothing. The first reviewer required one same-outcome
+follow-up because the coordinator supplied an incomplete canonical path; the
+worker stopped rather than expanding scope.
 
 The measurement window ran from explicit authorization at
 `2026-08-13T06:14:52+08:00` through independent evidence verification at
@@ -88,7 +92,8 @@ output; reasoning output was a 4,109-token subset. The coordinator used 4,595,09
 incremental tokens, while the two reviewer roots used 232,271 and 71,640. This
 failure-path observation reused a long-running coordinator, so its 93.8% share is
 not a fresh-context baseline or evidence about normal delivery efficiency. Active
-model time and tool-wait time were unavailable.
+model time and tool-wait time were unavailable. The separately authorized
+post-cutoff attempt and its child reviewer are excluded from these totals.
 
 ## Publication
 
@@ -99,4 +104,5 @@ model time and tool-wait time were unavailable.
 
 ## Current v0.1.0-preview blockers
 
+- A fresh case where a formal task already exists while bounded inventory omits it has not yet been reproduced.
 - Controlled two-worker parallel execution has not yet been validated.
