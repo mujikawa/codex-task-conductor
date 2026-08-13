@@ -42,27 +42,39 @@ repository-scoped skill link left no instruction or governance file behind.
 
 ## Operational pilots
 
-- [ ] Complete one serial independent-task pilot from a fresh coordinator context.
-- [ ] Verify the worker is a user-owned independent task, not a background subagent.
+- [x] Complete one serial independent-task pilot from a fresh coordinator context.
+- [x] Verify the worker is a user-owned independent task, not a background subagent.
 - [ ] Exercise a task-creation failure and confirm the coordinator stops instead of changing topology.
 - [ ] For a multi-dispatch pilot, confirm the creation operation and returned independent task ID separately for every worker.
-- [ ] Exercise an out-of-range inventory request and confirm it is reported as `unknown` ownership, then safely retried within the active runtime bound.
-- [ ] Confirm ownership uses recent inventory, known task IDs, Git state, and the durable tracker rather than one bounded list alone.
-- [ ] Exercise an ambiguous saved-project mapping and confirm destination failure remains separate from inventory and ownership results.
-- [ ] Resolve an ambiguous destination by explicit selection, refresh it before dispatch, and confirm cleanup is not incorrectly required when every ownership source is `clear`.
-- [ ] Exercise asynchronous task creation and confirm a client-side handle does not trigger a duplicate creation request or subagent fallback.
+- [x] Exercise an out-of-range inventory request and confirm it is reported as `unknown` ownership, then safely retried within the active runtime bound.
+- [x] Confirm ownership uses recent inventory, known task IDs, Git state, and the durable tracker rather than one bounded list alone.
+- [x] Exercise an ambiguous saved-project mapping and confirm destination failure remains separate from inventory and ownership results.
+- [x] Resolve an ambiguous destination by explicit selection, refresh it before dispatch, and confirm cleanup is not incorrectly required when every ownership source is `clear`.
+- [x] Exercise asynchronous task creation and confirm a client-side handle does not trigger a duplicate creation request or subagent fallback.
 - [ ] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
-- [ ] Supply a formal task ID through an independent trusted surface and confirm destination, title, repository, branch, and worktree metadata are verified before monitoring.
-- [ ] Capture a fixed start, cutoff, included roots/descendants, outcome states, model/effort, token categories, and elapsed-time definition.
+- [x] Supply a formal task ID through an independent trusted surface and confirm destination, title, repository, branch, and worktree metadata are verified before monitoring.
+- [x] Capture a fixed start, cutoff, included roots/descendants, outcome states, model/effort, token categories, and elapsed-time definition.
 - [ ] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
+
+Operational evidence (2026-08-13): Pilot 1 used a retained root coordinator with
+no parent context and four serial independent worker roots. Its later recovery
+exercise covered the bounded inventory retry, separate destination and inventory
+failures, multi-source ownership, explicit destination selection, one asynchronous
+creation request, and externally supplied formal-ID verification. Pilot 2
+completed one serial user-owned worker and reviewer flow through independent
+acceptance. The historical runs did not pass the three unchecked failure-path
+checks above; rules added after retrospective analysis are not execution evidence.
 
 ## Publication
 
-- [ ] Choose the release level honestly: `preview` while clean-room or parallel validation remains pending; stable only after the claimed capabilities pass.
+- [x] Choose the release level honestly: `preview` while clean-room or parallel validation remains pending; stable only after the claimed capabilities pass.
 - [x] Replace installation placeholders with the canonical public GitHub URL.
 - [ ] Create a signed or annotated version tag and GitHub release notes from `CHANGELOG.md`.
 - [ ] Reinstall from the published tag and repeat the recognition smoke test.
 
 ## Current v0.1.0-preview blockers
 
+- Stop-on-creation-failure behavior has not yet been revalidated after the topology fallback defect.
+- Per-dispatch creation-operation and independent-task-ID verification has not yet passed a fresh multi-dispatch pilot.
+- The corrected `formal ID unresolved / execution unknown` report has not yet been reproduced in a fresh correlation-race exercise.
 - Controlled two-worker parallel execution has not yet been validated.
