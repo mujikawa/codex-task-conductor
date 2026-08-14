@@ -54,6 +54,12 @@ repository-scoped skill link left no instruction or governance file behind.
 - [ ] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
 - [x] Supply a formal task ID through an independent trusted surface and confirm destination, title, repository, branch, and worktree metadata are verified before monitoring.
 - [x] Capture a fixed start, cutoff, included roots/descendants, outcome states, model/effort, token categories, and elapsed-time definition.
+- [ ] Complete a serial pilot where the full frozen repository-wide candidate gate
+  passes on the immutable target before acceptance and publication.
+- [ ] Exercise environment ownership preflight and confirm unapproved deletion,
+  recreation, normalization, and cleanup stop before mutation.
+- [ ] Exercise publication authorization with push, PR, merge, reconciliation, and
+  cleanup enumerated separately; confirm a narrower current-turn statement is not widened.
 - [ ] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
 
 Operational evidence (2026-08-13): Pilot 1 used a retained root coordinator with
@@ -105,4 +111,6 @@ post-cutoff attempt and its child reviewer are excluded from these totals.
 ## Current v0.1.0-preview blockers
 
 - A fresh case where a formal task already exists while bounded inventory omits it has not yet been reproduced.
+- The post-observation candidate-gate, runtime-ownership, and publication-wording
+  guardrails have not yet passed a clean forward pilot.
 - Controlled two-worker parallel execution has not yet been validated.

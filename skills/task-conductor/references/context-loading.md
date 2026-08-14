@@ -41,6 +41,8 @@ Send one packet per bounded outcome:
 - satisfied dependencies and pinned base
 - in scope, out of scope, and Definition of Done
 - dedicated branch, worktree, and mutable-resource ownership
+- environment, cache, port, database, and generated-output ownership plus allowed
+  create, reuse, rebuild, normalize, and cleanup actions
 - required validation and evidence locations
 - authorization boundaries and declared execution profile
 - model/tool cycle budget and stop conditions
@@ -62,6 +64,9 @@ raw test logs, or artifacts that the worker can locate from an exact reference.
   checks.
 - Reset the budget only for a newly scoped outcome or explicitly authorized
   follow-up. Preserve the original Definition of Done for a same-scope follow-up.
+- Count product correction loops, infrastructure recovery attempts, review cycles,
+  publication cycles, and full-gate reruns separately. A recovery may be exempt
+  from the product-change budget, but never from telemetry or stop conditions.
 
 ### Correction envelope
 
@@ -88,6 +93,8 @@ Create or start an independent review only when all checks pass:
   formal acceptance target
 - the scoped diff is stable and contains no unexplained files
 - required focused checks have exact results and evidence locations
+- the frozen repository-wide candidate gate has passed on the immutable target, or
+  the outcome remains `integrating` because a declared shared gate requires combined state
 - the durable tracker and Definition of Done agree with the claimed outcome
 - unresolved failures, skipped checks, generated artifacts, and owner-only actions
   are explicit
@@ -144,6 +151,9 @@ After delivery acceptance, classify the next action before continuing:
   example publication, merge, deployment, migration, or production observation.
 - Do not create the Ops task without explicit authorization. Give it a new compact
   dispatch packet, execution budget, durable state, and measurement boundary.
+- Enumerate push, PR creation, merge, reconciliation, deployment, and cleanup
+  separately. Do not widen a narrower action list announced in the current turn by
+  later relying on standing policy; restate or request authorization first.
 - If no Ops task is authorized, stop after recording the owner action and evidence.
 
 

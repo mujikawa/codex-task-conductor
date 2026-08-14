@@ -19,9 +19,14 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is a `v0.1.0-preview` draft. The generic skill, adoption guidance, MIT license, release checklist, and two serial observational case studies are present.
+This repository is a `v0.1.0-preview` draft. The generic skill, adoption guidance,
+MIT license, release checklist, two serial observational case studies, and three
+retrospective field observations are present.
 
-The workflow has been exercised with serial independent tasks. A clean-room installation test and a controlled two-worker parallel pilot are still pending. Parallel orchestration must therefore be described as experimental, not validated.
+The workflow has been exercised with serial independent tasks and a clean-room
+source-commit installation. A published-tag reinstall and a controlled two-worker
+parallel pilot are still pending. Parallel orchestration must therefore be
+described as experimental, not validated.
 
 ## Layout
 
@@ -44,6 +49,8 @@ docs/
 ├── adoption.md
 ├── case-study.md
 ├── field-observation-long-lifecycle.md
+├── field-observation-serial-gate-escape.md
+├── field-observation-zero-dispatch.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -113,6 +120,17 @@ To stop, tell the coordinator to stop dispatching, preserve durable handoff stat
 The [long-lifecycle field observation](docs/field-observation-long-lifecycle.md)
 records a retrospective lower-bound telemetry analysis and the workflow changes it
 motivated. It is not a controlled comparison with the serial pilots.
+
+The [zero-dispatch field observation](docs/field-observation-zero-dispatch.md)
+records a complete single-root manual-serial baseline. It distinguishes Git and
+tracker isolation from actual independent-task topology and is also not a
+controlled comparison with the serial pilots.
+
+The [serial gate-escape field observation](docs/field-observation-serial-gate-escape.md)
+records a real coordinator, independent worker, and independent reviewer topology
+that ultimately succeeded but required post-merge correction after an incomplete
+candidate gate. It motivates stricter acceptance, runtime-ownership, publication,
+and cycle-accounting rules.
 
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
 For destination, inventory, ownership, or topology failures, use the [dispatch troubleshooting guide](skills/task-conductor/references/troubleshooting.md).

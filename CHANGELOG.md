@@ -20,12 +20,20 @@ All notable changes to Task Conductor will be documented in this file.
 - A delivery-to-Ops decision boundary and Pilot 3 observational validation metrics.
 - A retrospective long-lifecycle field observation with phase cutoffs and
   lower-bound telemetry handling for missing root logs.
+- A zero-dispatch manual-serial field observation with complete single-root
+  telemetry, topology audit, delivery cutoff, and context-loading profile.
+- An independent serial-pilot field observation covering a post-merge gate escape,
+  runtime-ownership incidents, publication authorization wording, and separated
+  product/recovery/review/publication accounting.
 - Correction envelopes, layered tracker guidance, stable review-target rules,
   worktree cleanup classification, Windows host preflight, and production rehearsal
   requirements.
 
 ### Changed
 
+- Candidate gates must now pass on the immutable single-worker target before formal
+  acceptance; merged-only gates keep lifecycle at `integrating`. Runtime-resource
+  ownership and publication side effects must be enumerated explicitly.
 - Independent task creation failures now stop the workflow instead of silently falling back to a background subagent.
 - Measurement guidance now separates completed, accepted, and follow-up outcomes and classifies topology from creation evidence.
 - Measurement guidance now preserves the delivery-acceptance cutoff when later Git lifecycle or deployment work continues in the same coordinator.

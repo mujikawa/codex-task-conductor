@@ -10,7 +10,11 @@ Measure the workflow without turning telemetry into a new source of overhead.
 - active agent time and tool/test wait time when distinguishable
 - number of worker and follow-up tasks
 - repeated full-context reads and full verification reruns
+- product correction loops, infrastructure recovery attempts, review cycles,
+  publication cycles, and full-gate reruns as separate counters
 - conflicts, failed acceptance, and rework
+- escaped acceptance defects, including required gates first run or first failing
+  after an accepted or published claim
 - completed Definition of Done items
 - outcome state as `accepted`, `needs_followup`, `blocked`, or another declared status
 - creation topology for each root: independent task, background subagent, or manual execution

@@ -48,6 +48,7 @@ Out of scope: [items]
 Definition of Done: [criteria]
 Required validation: [commands and evidence]
 Branch/worktree: Use the dedicated task branch and worktree from [pinned base].
+Runtime ownership: [environment, cache, port, database, generated-output paths and permitted lifecycle actions]
 Authorization boundaries: [boundaries]
 Language: [requested language or inherit]
 
@@ -61,6 +62,7 @@ Model/tool cycle budget: [phase budgets or observable-loop proxy]
 Correction envelope: [exact mutable scope, allowed correction loops, focused checks, broad-gate allowance]
 Stop conditions: [budget boundary, failed gate, authorization boundary]
 Evidence locations: [exact durable references; do not embed raw history]
+Frozen candidate gate: [exact repository-wide commands required before review and acceptance]
 ```
 
 ## Reviewer
@@ -114,6 +116,7 @@ Use only after delivery acceptance and explicit authorization:
 Operate on the accepted delivery at [immutable target].
 
 Authorized operation: [publish | merge | deploy | migrate | monitor]
+Exact side effects: [push | PR creation | merge | reconciliation | deployment | cleanup; remove unauthorized items]
 Durable tracker: [tracker and accepted delivery record]
 Environment and rollback boundary: [facts]
 Rehearsal evidence: [same-platform syntax, fixture, topology, or dry-run evidence required before live mutation]

@@ -22,7 +22,22 @@ Read-only reviewers may use a pinned snapshot without creating a branch. A dedic
 
 ## Acceptance and integration
 
-Verify repository identity, base ancestry, final HEAD, scoped diff, clean status, and required checks before acceptance. Define merge order and a conflict owner before combining outcomes. Run the shared verification gate on the integrated state; individual worker success is insufficient.
+Verify repository identity, base ancestry, final HEAD, scoped diff, clean status,
+and the frozen repository-wide candidate gate on the immutable target before
+formal review or single-worker delivery acceptance. Define merge order and a
+conflict owner before combining outcomes. Run the shared verification gate on the
+integrated state; individual worker success is insufficient.
+
+When integration is required before a shared gate can run, use `integrating`, not
+`accepted`, until the gate passes. If repository policy requires merge before that
+gate, keep the outcome open and record the merge as provisional integration. A
+later required-gate failure is an escaped acceptance defect, not ordinary evidence
+collection.
+
+Prefer a freshly materialized immutable acceptance checkout when a long-lived
+worker worktree has unexplained EOL, environment, or generated-output drift. Do not
+rewrite a Git-clean delivery checkout merely to make verification tools agree
+unless that exact normalization is authorized and content identity is proven.
 
 ## Cleanup
 

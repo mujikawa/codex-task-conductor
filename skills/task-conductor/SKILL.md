@@ -83,6 +83,10 @@ Use `references/status-contract.md`. Treat task IDs and the live dashboard as ro
 - Give every mutating worker a dedicated branch and physical worktree from a pinned base.
 - Never assign two mutating tasks to the same branch or worktree.
 - Keep the coordinator out of worker implementation scope.
+- Declare ownership and permitted lifecycle actions for task environments, caches,
+  ports, databases, generated outputs, and other mutable runtime resources. Probe
+  an existing environment before use; do not delete, recreate, or normalize it
+  unless the packet or a later explicit authorization permits that exact action.
 - If dedicated worktrees are unavailable, run mutating outcomes serially in an exclusive checkout or report the limitation. Do not claim safe parallel mutation.
 - Follow `references/git-isolation.md` for dispatch, acceptance, integration, and cleanup.
 
@@ -129,6 +133,13 @@ diff hash before formal acceptance review. A pre-commit inspection may identify
 findings, but it is not the formal acceptance target and must not be followed by a
 second broad review merely to discover that the target was mutable.
 
+Freeze the exact repository-wide candidate gate before dispatch. For a single
+worker, run every required candidate check on the immutable target before formal
+review and delivery acceptance. When a required gate can run only after combining
+outcomes, keep the initiative at `integrating` until the shared gate passes. Do not
+publish an `accepted` claim or close the outcome first. Treat any later required-gate
+failure as an escaped acceptance defect and record its rework separately.
+
 Independently verify:
 
 - expected repository, branch, worktree, and final HEAD
@@ -142,6 +153,12 @@ Mark an outcome accepted only when evidence is sufficient. Worker confidence is 
 ## 9. Stop and hand off
 
 Stop when the initiative is complete, a dependency requires user authority, or remaining work cannot be safely split. Write accepted and blocked outcomes, evidence, execution profiles, decisions, and one next action to the durable tracker. Do not create a competing coordinator backlog.
+
+Before publication, enumerate the exact authorized side effects: push, pull-request
+creation, merge, reconciliation, deployment, and cleanup. A standing policy may
+satisfy authorization only within its exact boundary; it does not permit widening
+a narrower current-turn statement. If the announced action list changes after a
+policy read, stop and restate or obtain authorization before acting.
 
 After delivery acceptance, apply the delivery-to-Ops boundary in `references/context-loading.md`. Continue only for an already authorized bounded handoff; otherwise propose a separately authorized independent Ops task with its own packet and measurement cutoff.
 

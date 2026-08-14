@@ -53,6 +53,12 @@ Before review, reduce this record to the compact acceptance packet in
 
 Record acceptance time, accepted HEAD or review target, independently verified checks, satisfied Definition of Done items, parallel and integration evidence when applicable, deferred scope, telemetry availability, and one next action.
 
+Do not record `accepted` before every frozen single-worker candidate gate passes.
+When a required gate depends on merged or combined state, record `integrating`
+until it passes. If a required gate fails after an accepted claim, classify it as
+an escaped acceptance defect, reopen the outcome, and record the correction,
+rereview, and republication evidence separately.
+
 Acceptance verifies evidence. It does not authorize deployment, destructive actions, merge bypasses, or other owner-only operations.
 
 After acceptance, record whether the next action remains an authorized bounded

@@ -34,6 +34,8 @@ Keep stable scope in the canonical record:
 - Definition of Done
 - required verification and acceptance evidence
 - branch, worktree, and mutable-resource ownership
+- environment, cache, port, database, generated-output ownership, and permitted
+  create, reuse, rebuild, normalize, and cleanup actions
 - authorization boundaries
 - one next action
 
@@ -94,6 +96,7 @@ Close or mark an outcome accepted only when:
 
 - every Definition of Done item has evidence
 - required worker and integration gates pass
+- no required candidate gate was deferred until after an accepted or published claim
 - unresolved scope is explicitly deferred to another tracked outcome
 - the accepted revision or artifact is recorded
 - no required handoff or owner action remains
