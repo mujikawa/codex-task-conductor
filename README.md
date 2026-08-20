@@ -28,9 +28,9 @@ The workflow has been exercised with serial independent tasks, and field analysi
 has covered coordinator-owned subagent execution. The subagent-first direction has
 not yet completed a clean-room pilot. The optional `$delegate-to-agy` executor
 contract is specified but has not completed a Task Conductor clean-room pilot. A
-published-tag reinstall and a controlled two-worker parallel pilot are also
-pending. Parallel and AGY-backed orchestration must therefore be described as
-experimental, not validated.
+published-tag reinstall and fresh-process recognition smoke test have passed; a
+controlled two-worker parallel pilot remains pending. Parallel and AGY-backed
+orchestration must therefore be described as experimental, not validated.
 
 ## Layout
 

@@ -105,10 +105,24 @@ post-cutoff attempt and its child reviewer are excluded from these totals.
 
 - [x] Choose the release level honestly: `preview` while clean-room or parallel validation remains pending; stable only after the claimed capabilities pass.
 - [x] Replace installation placeholders with the canonical public GitHub URL.
-- [ ] Create a signed or annotated version tag and GitHub release notes from `CHANGELOG.md`.
-- [ ] Reinstall from the published tag and repeat the recognition smoke test.
+- [x] Create a signed or annotated version tag and GitHub release notes from `CHANGELOG.md`.
+- [x] Reinstall from the published tag and repeat the recognition smoke test.
 - [ ] Run one clean-room Task Conductor pilot with a coordinator-owned Codex worker
   using the separately installed `$delegate-to-agy` executor contract.
+
+Release evidence (2026-08-20): annotated tag `v0.1.0-preview` resolves to commit
+`a09de3b0ecc76ac5a7fa5e32555377de32d72658`. GitHub published it as a non-draft
+prerelease using `docs/release-v0.1.0-preview.md`. The official installer then
+downloaded `skills/task-conductor` from that tag. All 11 installed files matched
+the tagged source by SHA-256, and the official validator returned
+`Skill is valid!`.
+
+A fresh ephemeral `codex-cli 0.148.0` process ran in read-only mode, explicitly
+loaded `$task-conductor`, correctly summarized the subagent-first topology,
+independent-task boundary, AGY authorization boundary, and context-rollover rule,
+and made no tool call or dispatch. It reported 22,082 input tokens and 245 output
+tokens, including 65 reasoning-output tokens, over a 20.1-second observed command
+window. This is release-recognition telemetry, not delivery-performance evidence.
 
 ## Current v0.1.0-preview blockers
 
