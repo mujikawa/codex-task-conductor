@@ -2,7 +2,7 @@
 
 Keep the coordinator light, give every worker one score, and accept evidence—not applause.
 
-A draft, reusable Codex skill for coordinating tracked delivery across bounded worker tasks without making one long-running session the only source of truth.
+A draft, reusable Codex skill for coordinating tracked delivery across bounded workers without making one long-running session the only source of truth. Coordinator-owned subagents are the primary automation layer; independent user-owned tasks remain available for material lifecycle boundaries.
 
 ## Motivation
 
@@ -12,6 +12,7 @@ The observation does not prove that a particular model or reasoning level caused
 
 - keep coordinators focused on dependencies and acceptance
 - dispatch one bounded outcome per worker
+- use subagents for outcome-level automation and durable tracker checkpoints for coordinator context rollover
 - isolate mutating work with dedicated branches and worktrees
 - require durable handoffs and evidence-based acceptance
 - gate concurrency before claiming safe parallel work
@@ -23,10 +24,13 @@ This repository is a `v0.1.0-preview` draft. The generic skill, adoption guidanc
 MIT license, release checklist, two serial observational case studies, and three
 retrospective field observations are present.
 
-The workflow has been exercised with serial independent tasks and a clean-room
-source-commit installation. A published-tag reinstall and a controlled two-worker
-parallel pilot are still pending. Parallel orchestration must therefore be
-described as experimental, not validated.
+The workflow has been exercised with serial independent tasks, and field analysis
+has covered coordinator-owned subagent execution. The subagent-first direction has
+not yet completed a clean-room pilot. The optional `$delegate-to-agy` executor
+contract is specified but has not completed a Task Conductor clean-room pilot. A
+published-tag reinstall and a controlled two-worker parallel pilot are also
+pending. Parallel and AGY-backed orchestration must therefore be described as
+experimental, not validated.
 
 ## Layout
 
@@ -38,6 +42,7 @@ skills/task-conductor/
 │   └── task-governance-template.md
 └── references/
     ├── context-loading.md
+    ├── delegate-to-agy.md
     ├── git-isolation.md
     ├── measurement.md
     ├── parallel-readiness.md
@@ -59,7 +64,9 @@ LICENSE
 
 ## Core safety properties
 
-- Task creation, concurrency, and external mutations require explicit user authorization.
+- Worker creation, topology, concurrency, and external mutations require explicit user authorization.
+- Coordinator-owned subagents are preferred for bounded automation; independent tasks are reserved for material user-owned lifecycle boundaries.
+- Worker ownership and implementation executor are separate: an explicitly authorized Codex worker may manage AGY through the separately installed `$delegate-to-agy` skill.
 - Every mutating worker owns a dedicated branch and physical worktree.
 - Parallel dispatch requires independent outcomes, frozen contracts, non-overlapping mutation scopes, isolated resources, and an integration gate.
 - Worker summaries are not acceptance evidence.
@@ -89,20 +96,41 @@ If the skill is not recognized, verify that the installed directory contains `SK
 
 Invoke the installed skill as `$task-conductor`. Repository instructions remain authoritative for branch lifecycle, verification commands, durable trackers, language, and owner-only actions.
 
-## First serial pilot
+## Optional AGY executor
+
+Task Conductor can use `$delegate-to-agy` as an optional implementation executor
+without bundling or copying that skill. Install and maintain `$delegate-to-agy`
+separately. Explicitly invoking Task Conductor alone does not authorize sending
+workspace code to AGY.
+
+The recommended ownership chain is one coordinator-owned Codex worker subagent
+managing one AGY implementation in a clean linked worktree. The Codex worker
+captures the baseline, invokes AGY, independently reviews the actual diff, runs
+validation, and returns evidence to the coordinator. AGY remains an executor, not
+a Codex task, reviewer, or durable owner. See the
+[AGY executor integration contract](skills/task-conductor/references/delegate-to-agy.md).
+
+## First subagent-first serial pilot
 
 Start in a fresh coordinator task with a prompt similar to:
 
 ```text
-Use $task-conductor for one serial pilot. You may create and monitor exactly one
-independent Codex task for [bounded outcome]. Use [tracker] as durable state.
-Do not create subagents or a second worker. Require [verification gate], then
-independently accept or reject the evidence and stop.
+Use $task-conductor for one serial pilot. You may spawn and monitor exactly one
+coordinator-owned worker subagent for [bounded outcome]. Use [tracker] as durable
+state. Do not create an independent task, nested subagent, or second worker.
+Require [verification gate], then independently accept or reject the evidence and
+stop.
 ```
 
-The coordinator should show a compact dashboard containing the outcome, dependency, owner, task title/ID, execution profile, isolation, state, evidence, and one next action. It should not implement the worker's assigned scope.
+The coordinator should show a compact dashboard containing the outcome,
+dependency, topology and routing ID, execution profile, isolation, state,
+evidence, and one next action. It should not implement the worker's assigned
+scope.
 
-To stop, tell the coordinator to stop dispatching, preserve durable handoff state, and report all active independent task IDs. Independent tasks are user-owned and may need to be stopped or archived separately. A background subagent is parent-owned and is not an interchangeable fallback.
+To stop, tell the coordinator to stop dispatching, preserve durable handoff state,
+and report all active agent paths and independent task IDs. Subagents are
+parent-owned; independent tasks are user-owned and may need to be stopped or
+archived separately. Never switch between them silently.
 
 ## Known limitations
 
@@ -111,6 +139,9 @@ To stop, tell the coordinator to stop dispatching, preserve durable handoff stat
 - Codex task-management, model override, monitoring, and worktree capabilities vary by surface and host.
 - Token telemetry is cumulative and requires an explicit snapshot cutoff to avoid mixing later dispatches into an earlier baseline.
 - Automatic review and background subagent sessions can add hidden descendants; topology must be classified by the creation path and lineage, not a single metadata label.
+- Sidebar placement does not establish ownership: a surfaced subagent thread may look like a task while remaining parent-owned.
+- Codex context rollover and compaction thresholds are not treated as a fixed product contract. Checkpoint durable state before rollover and adopt it without redispatching active workers.
+- `$delegate-to-agy` is an optional external dependency. Its wrapper, policy, authentication, and installation lifecycle are not bundled with this repository.
 - Recent-task inventory is bounded and may not prove exclusive ownership by itself. A rejected inventory query means ownership is unknown, not conflicting or clear.
 - A newly created task may exist and start before recent-task inventory exposes its formal ID. A client-side creation handle proves acceptance, while setup and execution remain unknown until directly verified.
 - Long initiatives can defeat bounded orchestration when later publication,

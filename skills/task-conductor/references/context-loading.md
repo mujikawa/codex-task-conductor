@@ -12,6 +12,7 @@ directly control prompt caching, `reasoning.context`, or compaction thresholds.
 - Review readiness gate
 - Compact acceptance packet
 - Input reduction rules
+- Context rollover
 - Delivery-to-Ops boundary
 
 ## Context budget gate
@@ -45,6 +46,8 @@ Send one packet per bounded outcome:
   create, reuse, rebuild, normalize, and cleanup actions
 - required validation and evidence locations
 - authorization boundaries and declared execution profile
+- implementation executor; for AGY, include the allowed paths, AGY cycle budget,
+  and location of the private conversation-routing record
 - model/tool cycle budget and stop conditions
 - one next action
 
@@ -140,17 +143,48 @@ Record the final decision and evidence in durable state, not by preserving chat.
 Reduction never removes a repository-required check, evidence needed for safety, or
 information necessary to reproduce a failed acceptance.
 
+## Context rollover
+
+Treat context rollover as a coordinator lifecycle transition, not as worker
+redispatch. Do not rely on a fixed token threshold unless the active product
+surface explicitly exposes and guarantees one.
+
+Prepare a rollover checkpoint when compaction is observed or expected, the
+coordinator repeatedly reconstructs the same state, the initiative crosses a
+major lifecycle boundary, or Codex surfaces a continuation or replacement task:
+
+1. Stop new dispatches and freeze the current dashboard.
+2. Write active outcome state, topology, agent paths or task IDs, branch/worktree
+   ownership, implementation executor, immutable targets, blockers, decisions,
+   and one next action to the durable tracker. Keep external conversation IDs in a
+   private routing record when the durable tracker is public.
+3. Record which workers are still running. Do not recreate, cancel, or adopt them
+   solely because the UI shows another sidebar thread.
+4. Build a compact coordinator handoff containing only authoritative locations,
+   unresolved decisions, active routing IDs, and the next acceptance action.
+5. Verify whether the new thread is a surfaced subagent, a continuation, or an
+   independent user-owned task from its creation operation and lineage.
+6. Let a successor coordinator adopt the durable checkpoint before it monitors,
+   follows up, or dispatches anything. Reconcile live worker state once and avoid
+   duplicate dispatch.
+
+Compaction within the same thread does not itself create a new ownership boundary.
+Create an independent coordinator task only when the product does so, the user
+requests it, or separate lifecycle ownership is otherwise authorized and material.
+
 ## Delivery-to-Ops boundary
 
 After delivery acceptance, classify the next action before continuing:
 
 - Keep it in the current task only when it is a bounded recording or handoff action
   already authorized and uses the same risk boundary.
-- Propose an independent Ops task when work changes authorization, credentials,
+- Propose a separately tracked Ops outcome when work changes authorization, credentials,
   environment, tools, rollback needs, live-system risk, or monitoring duration—for
   example publication, merge, deployment, migration, or production observation.
-- Do not create the Ops task without explicit authorization. Give it a new compact
-  dispatch packet, execution budget, durable state, and measurement boundary.
+- Do not dispatch the Ops outcome without explicit authorization. Choose a
+  coordinator-owned subagent for bounded automation or an independent task when
+  user-owned lifecycle is material. Give it a new compact dispatch packet,
+  execution budget, durable state, and measurement boundary.
 - Enumerate push, PR creation, merge, reconciliation, deployment, and cleanup
   separately. Do not widen a narrower action list announced in the current turn by
   later relying on standing policy; restate or request authorization first.

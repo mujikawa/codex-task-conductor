@@ -18,6 +18,7 @@ Measure the workflow without turning telemetry into a new source of overhead.
 - completed Definition of Done items
 - outcome state as `accepted`, `needs_followup`, `blocked`, or another declared status
 - creation topology for each root: independent task, background subagent, or manual execution
+- implementation executor for each worker: Codex direct or externally delegated
 
 Use `unavailable` for missing telemetry. Do not estimate private reasoning tokens, cached tokens, or active time from wall-clock duration.
 
@@ -37,6 +38,11 @@ Freeze the measurement boundary before calculating totals:
   transport, password-policy, credential, or cleanup work to the original feature
 
 Classify roots by the operation that created them. A successful independent-task creation and an explicit subagent spawn are different topology evidence. Do not use a generic `thread_source` value alone; it may be an implementation detail shared by both.
+
+Classify AGY as an implementation executor inside its owning Codex worker, not as
+a Codex task root. Record AGY invocations and remediation passes separately when
+available; do not combine AGY-reported usage with Codex token totals unless the
+measurement source and units are equivalent.
 
 Report completed outcomes separately from accepted outcomes. A `needs_followup` result can be a completed bounded review without being accepted delivery evidence.
 
@@ -82,7 +88,7 @@ cutoff before any separately authorized Ops work and record:
 - acceptance result, missing-evidence follow-ups, escaped defects, rework, and any
   required check omitted or delayed by reduction
 - whether delivery acceptance stopped cleanly or transitioned to an explicitly
-  authorized independent Ops task with a separate packet and cutoff
+  authorized separately tracked Ops outcome with a declared topology, packet, and cutoff
 
 Report gate adherence and evidence quality even when token telemetry is unavailable.
 Compare Pilot 3 numerically with an earlier pilot only if outcome, scope, gates,

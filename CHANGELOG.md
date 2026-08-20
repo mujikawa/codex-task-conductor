@@ -31,6 +31,14 @@ All notable changes to Task Conductor will be documented in this file.
 
 ### Changed
 
+- Coordinator-owned subagents are now the preferred bounded automation topology;
+  independent user-owned tasks are reserved for material lifecycle boundaries.
+- Added a durable context-rollover protocol that distinguishes compaction,
+  surfaced subagent threads, and independent coordinator tasks while preventing
+  duplicate dispatch.
+- Added an optional `$delegate-to-agy` executor contract that keeps Codex worker
+  ownership separate from external implementation, requires clean linked
+  worktrees and one writer, and leaves the AGY wrapper under its own skill.
 - Candidate gates must now pass on the immutable single-worker target before formal
   acceptance; merged-only gates keep lifecycle at `integrating`. Runtime-resource
   ownership and publication side effects must be enumerated explicitly.

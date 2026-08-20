@@ -33,6 +33,7 @@ Keep stable scope in the canonical record:
 - dependencies and blockers
 - Definition of Done
 - required verification and acceptance evidence
+- implementation executor and private routing-record location when an external agent is used
 - branch, worktree, and mutable-resource ownership
 - environment, cache, port, database, generated-output ownership, and permitted
   create, reuse, rebuild, normalize, and cleanup actions
@@ -87,7 +88,7 @@ A tracker authorizes tracking, not every action needed to complete the work. Req
 - destructive database or filesystem operations
 - credentials, secrets, permissions, or security settings
 - force pushes, bypasses, or deletion of unmerged work
-- task creation or concurrency when not already authorized
+- worker creation, topology, or concurrency when not already authorized
 - [additional owner-only actions]
 
 ## Closure

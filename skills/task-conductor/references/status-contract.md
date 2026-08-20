@@ -4,7 +4,7 @@
 
 Use one row per outcome:
 
-| Outcome | Durable tracker | Depends on | Task title / ID | Execution profile | Branch / worktree | Status | Next action |
+| Outcome | Durable tracker | Depends on | Topology / routing ID | Executor / execution profile | Branch / worktree | Status | Next action |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 
 Allowed statuses:
@@ -34,15 +34,16 @@ into the stable specification. Preserve only decision-relevant history.
 Return:
 
 1. outcome and durable tracker
-2. task title and immutable task ID
-3. model and reasoning effort, or `default/inherited`
-4. repository, branch, worktree, base, and final HEAD
-5. changed files and rationale
-6. commands and exact pass/fail results
-7. Definition of Done evidence
-8. unresolved risks, blockers, and owner-only actions
-9. token and elapsed-time telemetry when available
-10. one recommended next action
+2. worker title, topology, and agent path or immutable task ID
+3. implementation executor; for AGY, version, terminal status, private conversation-routing location, and remediation count
+4. model and reasoning effort, or `default/inherited`
+5. repository, branch, worktree, base, and final HEAD
+6. changed files and rationale
+7. commands and exact pass/fail results
+8. Definition of Done evidence
+9. unresolved risks, blockers, and owner-only actions
+10. token and elapsed-time telemetry when available
+11. one recommended next action
 
 If incomplete, update the durable handoff instead of leaving state only in chat.
 
@@ -62,5 +63,6 @@ rereview, and republication evidence separately.
 Acceptance verifies evidence. It does not authorize deployment, destructive actions, merge bypasses, or other owner-only operations.
 
 After acceptance, record whether the next action remains an authorized bounded
-handoff or requires a proposed independent Ops task. A proposed Ops task needs new
-authorization, its own dispatch packet, and a separate measurement boundary.
+handoff or requires a separately tracked Ops outcome. The Ops outcome needs new
+authorization, an explicit subagent or independent-task topology, its own dispatch
+packet, and a separate measurement boundary.

@@ -107,6 +107,8 @@ post-cutoff attempt and its child reviewer are excluded from these totals.
 - [x] Replace installation placeholders with the canonical public GitHub URL.
 - [ ] Create a signed or annotated version tag and GitHub release notes from `CHANGELOG.md`.
 - [ ] Reinstall from the published tag and repeat the recognition smoke test.
+- [ ] Run one clean-room Task Conductor pilot with a coordinator-owned Codex worker
+  using the separately installed `$delegate-to-agy` executor contract.
 
 ## Current v0.1.0-preview blockers
 

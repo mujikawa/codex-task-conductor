@@ -1,10 +1,11 @@
 # Dispatch troubleshooting
 
-Use this guide when an independent-task preflight or dispatch fails. Preserve the requested topology and authorization boundary while diagnosing it.
+Use this guide when worker preflight or dispatch fails. Preserve the requested topology and authorization boundary while diagnosing it. The independent-task sections apply only when that topology was selected.
 
 ## Contents
 
 - Classify the failure
+- Subagent creation or routing fails
 - Independent task creation fails
 - One repository maps to multiple saved projects
 - Task inventory exceeds a runtime bound
@@ -26,6 +27,14 @@ Report these dimensions separately:
 - **Topology:** the result is a subagent or another execution form instead of the authorized independent task.
 
 Do not collapse them into a generic dispatch failure. A failure in one dimension does not prove conflict or clearance in another.
+
+## Subagent creation or routing fails
+
+1. Confirm whether spawning returned an agent ID or path before retrying.
+2. Inspect the active agent inventory and parent lineage once.
+3. Retry only when the first request definitely created nothing.
+4. Stop and report the exact error or unresolved routing state otherwise.
+5. Do not create an independent task or implement the worker scope in the coordinator without new explicit authorization.
 
 ## Independent task creation fails
 
@@ -107,7 +116,10 @@ Classify the result as `clear`, `conflict`, or `unknown`. Stop dispatch on `conf
 
 For every worker, record the requested topology, creation operation, returned task ID, and observed topology. Re-check these fields on every dispatch.
 
-If a previously successful coordinator begins spawning background agents, stop the batch. Preserve durable handoff state and request explicit authorization before changing topology or recreating unfinished work as independent tasks.
+If a coordinator produces a topology different from the recorded authorization,
+stop the batch. Preserve durable handoff state and request explicit authorization
+before changing topology or recreating unfinished work. Sidebar placement is not
+topology evidence; use the creation operation, routing ID, and lineage.
 
 ## Host and Windows preflight
 

@@ -23,7 +23,7 @@ Keep global guidance short. For example:
 ## Cross-task coordination
 
 - When I explicitly request cross-task orchestration, use `$task-conductor`.
-- Do not create independent tasks or increase concurrency without explicit authorization.
+- Do not spawn subagents, create independent tasks, or increase concurrency without explicit authorization.
 - Propagate my requested output language to every dispatched task.
 ```
 
@@ -67,7 +67,9 @@ Record the actual capabilities of the Codex surface before the first pilot:
 
 | Capability | Preferred behavior | Safe fallback |
 | --- | --- | --- |
-| Create and title independent tasks | Pass a bounded title and prompt at creation; verify the returned independent task ID | Produce prompts for the user to create manually; do not substitute a background subagent |
+| Spawn and manage subagents | Use one bounded coordinator-owned worker, retain its agent path, and monitor with bounded waits | Run the outcome directly only when it no longer needs a coordinator; otherwise stop |
+| Create and title independent tasks | Use only for a material user-owned lifecycle boundary; verify the returned independent task ID | Produce a prompt for the user to create manually; do not silently change topology |
+| Delegate implementation to AGY | Require an explicit `$delegate-to-agy` request, a clean linked worktree, one writer, and the installed skill's validated wrapper | Use Codex direct execution or stop; do not recreate the wrapper or silently send code externally |
 | Select model and reasoning effort | Omit overrides by default; pass explicit user choices through task creation | Record `default/inherited` |
 | Monitor task state | Use bounded cursor-based waits or snapshots | Ask workers to update the durable tracker and check at explicit milestones |
 | Inventory current ownership | Use the active runtime's accepted query bound, known task IDs, Git state, and the durable tracker | Classify ownership as `unknown` and stop dispatch |
@@ -76,7 +78,29 @@ Record the actual capabilities of the Codex surface before the first pilot:
 
 Missing capabilities must reduce the claimed workflow. Do not describe manual dispatch as automated orchestration or concurrent dispatch as actual parallel execution.
 
-Independent tasks and background subagents are not interchangeable. An independent task is user-owned and can remain available for direct follow-up; a subagent is owned by the parent workflow and reports back through it. If the preferred creation call fails, changing to a subagent requires new explicit authorization because visibility, cancellation, context, and lifecycle semantics change.
+Independent tasks and background subagents are not interchangeable. Prefer a
+subagent for bounded automation within one delivery lifecycle: the coordinator can
+spawn, monitor, follow up, and collect its result directly. Use an independent task
+when direct user follow-up, separate authorization or risk, long-lived ownership,
+a distinct host or repository, or explicit user preference makes its independent
+lifecycle material. If the authorized creation call fails, changing topology
+requires new explicit authorization because visibility, cancellation, context,
+and lifecycle semantics change.
+
+Worker ownership and implementation executor are also separate. A
+coordinator-owned Codex subagent can manage AGY through `$delegate-to-agy`; AGY
+does not become a Codex task or durable owner. Keep the delegation skill installed
+and maintained separately rather than copying its executable wrapper or policy
+into this repository. Record the AGY conversation ID in private routing state when
+the canonical tracker is public. See the
+[AGY integration contract](../skills/task-conductor/references/delegate-to-agy.md).
+
+Codex may surface subagent threads in the sidebar or continue work after context
+compaction. UI placement alone does not turn a parent-owned subagent into an
+independent task. Before a coordinator rollover, checkpoint the durable tracker,
+active routing IDs, Git and resource ownership, decisions, and one next action. A
+successor coordinator adopts that checkpoint and reconciles live workers once; it
+does not redispatch them.
 
 Do not classify topology from a field such as `thread_source` by itself. Prefer the creation operation and returned task ID. For forensic telemetry, corroborate that evidence with parent lineage and agent-path metadata when available.
 
@@ -89,7 +113,7 @@ Duplicate saved-project metadata does not always require immediate cleanup. Expl
 1. Agree on the canonical tracker and authorization boundaries.
 2. Adopt repository-local instructions and the tailored governance document through normal review.
 3. Install the skill for pilot participants.
-4. Run one serial worker through dispatch, handoff, and independent acceptance.
+4. Run one serial coordinator-owned subagent through dispatch, handoff, and independent acceptance.
 5. Record the operational baseline and correct any governance gaps.
 6. Authorize at most two mutating workers for the first parallel pilot only after every readiness check passes.
 7. Keep, revise, or remove the workflow based on comparable delivery evidence.

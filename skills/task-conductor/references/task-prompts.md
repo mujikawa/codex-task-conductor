@@ -4,22 +4,24 @@ Replace bracketed fields and remove fields that do not apply. Propagate the user
 
 ## Contents
 
-- Task creation metadata
+- Worker creation metadata
 - Coordinator
 - Worker
 - Reviewer
 - Parallel pilot
 - Follow-up
-- Independent Ops task
+- Ops outcome
 
-## Task creation metadata
+## Worker creation metadata
 
 ```text
 Title: [project/module] | [bounded outcome] | [Coordinator|Worker|Reviewer|Follow-up|Ops]
+Topology: [coordinator-owned subagent | independent user-owned task]
+Implementation executor: [Codex direct | AGY via $delegate-to-agy]
 Execution profile: [default/inherited | model=[user-requested model], reasoning effort=[level], rationale=[why]]
 ```
 
-Pass title, model, and reasoning effort through task-creation fields when supported. Omit model and reasoning parameters for configured defaults.
+Pass title, model, and reasoning effort through creation fields when supported. Omit model and reasoning parameters for configured defaults. Record the returned agent path or task ID.
 
 ## Coordinator
 
@@ -28,12 +30,14 @@ Use $task-conductor to coordinate [initiative].
 
 Durable tracker: [tracker]
 Target outcome: [initiative outcome]
-Authorized topology: [one worker | exact concurrency]
+Authorized topology: [coordinator-owned subagent | independent user-owned task]
+Authorized concurrency: [one worker | exact concurrency]
+Implementation executor: [Codex direct | AGY via $delegate-to-agy]
 Language: [requested language or inherit]
 Constraints: [authorization and repository rules]
 Initial next action: [one action]
 
-Do not implement worker scope or create nested tasks without explicit authorization.
+Prefer coordinator-owned subagents unless a separate user-owned lifecycle is material or explicitly requested. Do not implement worker scope or create nested tasks without explicit authorization.
 ```
 
 ## Worker
@@ -52,7 +56,7 @@ Runtime ownership: [environment, cache, port, database, generated-output paths a
 Authorization boundaries: [boundaries]
 Language: [requested language or inherit]
 
-Read current durable state and repository instructions before editing. Do not create subagents or tasks. Return the worker completion contract.
+Read current durable state and repository instructions before editing. Do not create nested subagents or tasks. Return the worker completion contract.
 ```
 
 Build this prompt from the compact dispatch packet in `context-loading.md`. Add:
@@ -64,6 +68,11 @@ Stop conditions: [budget boundary, failed gate, authorization boundary]
 Evidence locations: [exact durable references; do not embed raw history]
 Frozen candidate gate: [exact repository-wide commands required before review and acceptance]
 ```
+
+When the executor is AGY, add the compact AGY delegation packet from
+`delegate-to-agy.md`. Explicitly instruct the Codex worker to invoke
+`$delegate-to-agy`, review the resulting diff independently, and return Codex's
+verification rather than AGY's claims.
 
 ## Reviewer
 
@@ -108,9 +117,11 @@ Execution profile: [preserve current | user-requested override and rationale]
 Do not change scope or Definition of Done. Return updated HEAD, validation, telemetry availability, and durable handoff evidence.
 ```
 
-## Independent Ops task
+## Ops outcome
 
-Use only after delivery acceptance and explicit authorization:
+Use only after delivery acceptance and explicit authorization. Select a
+coordinator-owned subagent for bounded automation or an independent task when its
+user-owned lifecycle is material:
 
 ```text
 Operate on the accepted delivery at [immutable target].

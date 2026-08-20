@@ -43,7 +43,7 @@ Record every result. Do not replace the table with a general claim that tasks lo
 
 ## Failure behavior
 
-- Keep independent workers running when an unrelated outcome fails.
+- Keep unaffected workers running when an unrelated outcome fails.
 - Pause dependent workers when a prerequisite fails or changes.
 - Stop the batch when a shared contract, base, resource, or authorization boundary drifts.
 - Convert material scope changes into new tracked outcomes.
