@@ -20,7 +20,7 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is a `v0.1.0-preview` draft. The generic skill, adoption guidance,
+This repository is the `v0.1.0-preview` release. The generic skill, adoption guidance,
 MIT license, release checklist, two serial observational case studies, and three
 retrospective field observations are present.
 
@@ -84,6 +84,13 @@ Copy and tailor the [task-governance template](skills/task-conductor/assets/task
 
 Ask Codex to use `$skill-installer` to install the `skills/task-conductor`
 directory from [mujikawa/codex-task-conductor](https://github.com/mujikawa/codex-task-conductor).
+
+For a reproducible release installation, ask:
+
+```text
+Use $skill-installer to install skills/task-conductor from
+mujikawa/codex-task-conductor at ref v0.1.0-preview.
+```
 
 Restart or reload Codex after installation, then open a fresh task and ask:
 
@@ -164,6 +171,8 @@ candidate gate. It motivates stricter acceptance, runtime-ownership, publication
 and cycle-accounting rules.
 
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
+See the [v0.1.0-preview release notes](docs/release-v0.1.0-preview.md) for the
+rationale, topology choices, and complete usage examples.
 For destination, inventory, ownership, or topology failures, use the [dispatch troubleshooting guide](skills/task-conductor/references/troubleshooting.md).
 
 ## License

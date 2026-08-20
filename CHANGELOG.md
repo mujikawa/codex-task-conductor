@@ -4,6 +4,8 @@ All notable changes to Task Conductor will be documented in this file.
 
 ## Unreleased
 
+## 0.1.0-preview - 2026-08-20
+
 ### Added
 
 - Bounded coordinator and worker contracts.
