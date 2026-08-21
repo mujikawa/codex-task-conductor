@@ -20,17 +20,18 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.0-preview` release. The generic skill, adoption guidance,
-MIT license, release checklist, two serial observational case studies, and three
-retrospective field observations are present.
+This repository is the `v0.1.1-preview` release. The generic skill, adoption guidance,
+MIT license, release checklist, two serial observational case studies, and four
+field observations are present.
 
-The workflow has been exercised with serial independent tasks, and field analysis
-has covered coordinator-owned subagent execution. The subagent-first direction has
-not yet completed a clean-room pilot. The optional `$delegate-to-agy` executor
-contract is specified but has not completed a Task Conductor clean-room pilot. A
-published-tag reinstall and fresh-process recognition smoke test have passed; a
-controlled two-worker parallel pilot remains pending. Parallel and AGY-backed
-orchestration must therefore be described as experimental, not validated.
+The workflow has been exercised with serial independent tasks, a clean-room
+coordinator-owned subagent, and a controlled two-worker concurrent pilot with an
+integration acceptance gate. A published-tag reinstall and fresh-process
+recognition smoke test have also passed. The optional `$delegate-to-agy` executor
+contract now has one accepted clean-room pilot after its wrapper and portable EOL
+boundaries were corrected. The evidence remains preliminary: the successful run
+followed explicit replacement-worker authorization and one service-level fresh
+retry, so it validates the bounded workflow rather than reliability or efficiency.
 
 ## Layout
 
@@ -54,8 +55,11 @@ docs/
 ├── adoption.md
 ├── case-study.md
 ├── field-observation-long-lifecycle.md
+├── field-observation-subagent-parallel-agy.md
 ├── field-observation-serial-gate-escape.md
 ├── field-observation-zero-dispatch.md
+├── release-v0.1.0-preview.md
+├── release-v0.1.1-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -89,7 +93,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.0-preview.
+mujikawa/codex-task-conductor at ref v0.1.1-preview.
 ```
 
 Restart or reload Codex after installation, then open a fresh task and ask:
@@ -141,14 +145,28 @@ archived separately. Never switch between them silently.
 
 ## Known limitations
 
-- The recorded pilots are observational, serial, and not controlled efficiency benchmarks. Their different outcome scopes prevent direct token or elapsed-time comparison.
-- Parallel readiness rules are specified but have not completed a controlled two-worker clean-room pilot.
+- The recorded pilots are observational, not controlled efficiency benchmarks.
+  Their different outcome scopes prevent direct token or elapsed-time comparison.
+- One controlled two-worker clean-room pilot passed readiness, isolated delivery,
+  and ordered integration acceptance. It does not establish performance gains or
+  prove hardware-level simultaneous execution.
 - Codex task-management, model override, monitoring, and worktree capabilities vary by surface and host.
 - Token telemetry is cumulative and requires an explicit snapshot cutoff to avoid mixing later dispatches into an earlier baseline.
 - Automatic review and background subagent sessions can add hidden descendants; topology must be classified by the creation path and lineage, not a single metadata label.
 - Sidebar placement does not establish ownership: a surfaced subagent thread may look like a task while remaining parent-owned.
 - Codex context rollover and compaction thresholds are not treated as a fixed product contract. Checkpoint durable state before rollover and adopt it without redispatching active workers.
 - `$delegate-to-agy` is an optional external dependency. Its wrapper, policy, authentication, and installation lifecycle are not bundled with this repository.
+- The first Task Conductor plus AGY clean-room attempt exposed a cross-identity
+  Git inspection defect in the separately maintained wrapper. After that defect
+  was repaired and reinstalled, a later AGY run returned `SUCCESS` but failed the
+  exact-LF acceptance check. A second wrapper repair admitted the valid
+  same-conversation remediation, but AGY returned terminal `ERROR` after leaving
+  the correct LF artifact. A later bounded fresh run returned `SUCCESS` with a
+  current receipt but again materialized CRLF. A newly scoped pilot then adopted
+  repository-owned LF policy and immutable-blob acceptance. After one zero-change
+  `503 UNAVAILABLE` and the single permitted fresh retry, AGY returned `SUCCESS`;
+  Codex verified the receipt, scope, exact 9-byte committed blob, ancestry, and
+  tracked-clean state before acceptance.
 - Recent-task inventory is bounded and may not prove exclusive ownership by itself. A rejected inventory query means ownership is unknown, not conflicting or clear.
 - A newly created task may exist and start before recent-task inventory exposes its formal ID. A client-side creation handle proves acceptance, while setup and execution remain unknown until directly verified.
 - Long initiatives can defeat bounded orchestration when later publication,
@@ -170,9 +188,16 @@ that ultimately succeeded but required post-merge correction after an incomplete
 candidate gate. It motivates stricter acceptance, runtime-ownership, publication,
 and cycle-accounting rules.
 
+The [subagent, parallel, and AGY clean-room field observation](docs/field-observation-subagent-parallel-agy.md)
+records the first direct subagent acceptance, a controlled two-worker integration,
+and the bounded AGY recovery sequence through the first accepted portable-EOL AGY
+delivery without treating partial or byte-invalid output as accepted evidence.
+
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
-See the [v0.1.0-preview release notes](docs/release-v0.1.0-preview.md) for the
-rationale, topology choices, and complete usage examples.
+See the [v0.1.1-preview release notes](docs/release-v0.1.1-preview.md) for the
+latest validation evidence and usage guidance. The
+[v0.1.0-preview notes](docs/release-v0.1.0-preview.md) remain available for the
+original topology rationale and examples.
 For destination, inventory, ownership, or topology failures, use the [dispatch troubleshooting guide](skills/task-conductor/references/troubleshooting.md).
 
 ## License

@@ -42,6 +42,8 @@ repository-scoped skill link left no instruction or governance file behind.
 
 ## Operational pilots
 
+- [x] Complete one clean-room serial pilot with a coordinator-owned Codex
+  subagent and independent coordinator acceptance.
 - [x] Complete one serial independent-task pilot from a fresh coordinator context.
 - [x] Verify the worker is a user-owned independent task, not a background subagent.
 - [x] Exercise a task-creation failure and confirm the coordinator stops instead of changing topology.
@@ -60,7 +62,7 @@ repository-scoped skill link left no instruction or governance file behind.
   recreation, normalization, and cleanup stop before mutation.
 - [ ] Exercise publication authorization with push, PR, merge, reconciliation, and
   cleanup enumerated separately; confirm a narrower current-turn statement is not widened.
-- [ ] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
+- [x] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
 
 Operational evidence (2026-08-13): Pilot 1 used a retained root coordinator with
 no parent context and four serial independent worker roots. Its later recovery
@@ -101,13 +103,24 @@ not a fresh-context baseline or evidence about normal delivery efficiency. Activ
 model time and tool-wait time were unavailable. The separately authorized
 post-cutoff attempt and its child reviewer are excluded from these totals.
 
+Subagent and parallel evidence (2026-08-20): an isolated local fixture pinned one
+base and assigned non-overlapping files to coordinator-owned workers. The serial
+direct outcome produced one immutable commit and passed independent path, content,
+ancestry, whitespace, and cleanliness checks. Both concurrent workers then
+produced one isolated commit each. The coordinator independently accepted both,
+integrated them in the declared A-then-B order, and passed the frozen two-file
+integration gate on a clean worktree. This validates controlled concurrency and
+integration acceptance, not token savings or hardware-level simultaneous
+execution. Worker token and active-time telemetry were unavailable.
+
 ## Publication
 
-- [x] Choose the release level honestly: `preview` while clean-room or parallel validation remains pending; stable only after the claimed capabilities pass.
+- [x] Choose the release level honestly: remain `preview` while the recorded
+  inventory-correlation and forward-guardrail gaps remain open.
 - [x] Replace installation placeholders with the canonical public GitHub URL.
 - [x] Create a signed or annotated version tag and GitHub release notes from `CHANGELOG.md`.
 - [x] Reinstall from the published tag and repeat the recognition smoke test.
-- [ ] Run one clean-room Task Conductor pilot with a coordinator-owned Codex worker
+- [x] Run one clean-room Task Conductor pilot with a coordinator-owned Codex worker
   using the separately installed `$delegate-to-agy` executor contract.
 
 Release evidence (2026-08-20): annotated tag `v0.1.0-preview` resolves to commit
@@ -124,9 +137,83 @@ and made no tool call or dispatch. It reported 22,082 input tokens and 245 outpu
 tokens, including 65 reasoning-output tokens, over a 20.1-second observed command
 window. This is release-recognition telemetry, not delivery-performance evidence.
 
-## Current v0.1.0-preview blockers
+AGY pilot evidence (2026-08-20): the authorized coordinator-owned Codex worker
+passed AGY executable, version, repository, branch, base, ancestry, and clean
+worktree preflight. The separately installed `$delegate-to-agy` wrapper then
+failed its own Git change inspection before AGY launched; validation-only mode
+failed at the same boundary while the equivalent standalone Git commands passed.
+No AGY conversation, tracked change, remediation pass, or commit was created, so
+at that cutoff the publication item remained unchecked and the outcome was
+`needs_followup`.
+
+AGY follow-up evidence (2026-08-21): the wrapper failure was traced to a linked
+worktree created under the sandbox identity and inspected under the host identity,
+not to flattened PowerShell argument arrays. The separately maintained wrapper
+added command-scoped `safe.directory` only for its derived workspace, passed its
+original validation-only reproduction, was published, reinstalled from the
+immutable commit, and matched all 11 published Git blobs. AGY 1.1.16 then launched
+in a fresh conversation but returned `ERROR` after its sandbox denied an attempted
+PowerShell byte-check command. It left only the allowed marker file changed, but
+with CRLF instead of the required LF. Because a failed run left a tracked partial
+change, the worker correctly performed no retry, remediation, normalization, or
+commit. The private conversation ID is intentionally omitted.
+
+Second AGY follow-up evidence (2026-08-21): after explicit recovery authority,
+the coordinator restored the sole partial file to the pinned base and clarified
+that AGY should use only its workspace edit tool while Codex owned byte
+verification. Installed-wrapper validation passed with a fresh task and no cache
+hit. AGY 1.1.17 returned `SUCCESS` and changed only the allowed file, but Codex
+again found CRLF instead of the required LF. The worker created a valid
+same-conversation remediation packet; the wrapper rejected it before contacting
+AGY because the successful implementation receipt binds the implementation task
+hash while remediation necessarily has a new task hash. No remediation pass or
+commit occurred, and the private conversation ID remains omitted.
+
+Third AGY follow-up evidence (2026-08-21): a separately authorized wrapper repair
+admitted receipt-bound remediation only when receipt status, prior task SHA format,
+conversation identity, current output hashes, and current write scope all agreed.
+The repair passed the real blocked packet, official validation, publication,
+reinstallation, and all 11 published-blob comparisons. The same-conversation AGY
+1.1.17 remediation then changed the file to the correct LF bytes, but terminal
+JSON status was `ERROR` because AGY's later fuzzy fallback reported no net diff
+and could not find the old target content. Independent Codex checks confirmed the
+correct 9-byte file, sole changed path, and clean diff, but the receipt still
+binds the prior implementation task. The frozen contract therefore prohibited a
+commit or acceptance.
+
+Fourth AGY follow-up evidence (2026-08-21): the coordinator preserved the failed
+remediation evidence, restored the sole tracked file to the pinned base, and
+created a fresh `implement` task with no conversation reuse. Installed-wrapper
+validation passed with one write path, no cache hit, and no remediation baseline.
+AGY 1.1.17 returned terminal `SUCCESS` in one turn, and the new receipt correctly
+bound the current task and actual output. Independent Codex checks nevertheless
+measured `6167792D706173730D0A` (10-byte CRLF), not the frozen
+`6167792D706173730A` (9-byte LF) contract. Scope, ancestry, and whitespace checks
+passed, but no commit or automatic retry was permitted. The private conversation
+ID remains omitted.
+
+Portable-EOL AGY pilot evidence (2026-08-21): a newly scoped fixture base added
+`src/*.txt text eol=lf` and changed the portable byte gate from mutable Windows
+worktree bytes to the immutable committed blob. The initial file materialized as
+LF in a fresh linked worktree. Two wrapper launches were stopped before process
+creation because the original worker did not directly inherit the later trusted
+user authorization; coordinator-relayed authorization was correctly rejected.
+An explicitly authorized replacement worker then reached AGY but received
+eligibility-check `503 UNAVAILABLE` with zero turns, zero tokens, no conversation,
+no receipt, and no changes. The one separately authorized fresh retry used a new
+replacement worker that directly inherited the user authorization. AGY 1.1.17
+returned terminal `SUCCESS` in one turn, and the worker created immutable commit
+`57202c365a2fc22721989605da9a8de6d3337a3f`. Coordinator acceptance verified the
+current receipt's task and output bindings, pinned-base ancestry, exactly
+`src/agy.txt` committed, no `.agy` artifact, clean whitespace and tracked state,
+blob `8fa3b154de706ac4bf672151e0d9c97a74358cdb`, size 9, and exact bytes
+`6167792D706173730A`. The successful retry reported 41,359 input, 1,895 output,
+1,465 thinking, 24,409 cache-read, and 43,254 total tokens over 11.010 seconds;
+Codex token and active-time telemetry were unavailable. Private conversation IDs
+remain omitted. No push, merge, PR, deployment, or cleanup occurred.
+
+## Remaining preview blockers
 
 - A fresh case where a formal task already exists while bounded inventory omits it has not yet been reproduced.
 - The post-observation candidate-gate, runtime-ownership, and publication-wording
   guardrails have not yet passed a clean forward pilot.
-- Controlled two-worker parallel execution has not yet been validated.

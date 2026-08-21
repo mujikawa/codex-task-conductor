@@ -24,6 +24,13 @@ and validates them.
 - Verify `$delegate-to-agy` is installed and load its current instructions. If it
   is unavailable, report the missing optional dependency; do not recreate or
   install it without authorization.
+- Ensure the worker that will launch AGY directly inherits the user's explicit
+  external-delegation authorization as trusted input. On approval surfaces that
+  distinguish user input from coordinator relay text, a worker created before
+  authorization may be unable to use the relay. If launch is rejected at that
+  boundary, do not bypass it in the coordinator or repeatedly resend the same
+  relay. Create a replacement only after the user explicitly authorizes that
+  topology and the replacement can directly inherit the authorization.
 - Give the Codex worker a clean linked Git worktree from the pinned base. Do not
   use the main worktree for unattended AGY automation.
 - Assign exactly one write-capable owner to that worktree. The coordinator and any
@@ -62,6 +69,12 @@ The worker completion record must distinguish AGY claims from Codex-verified
 results and include AGY version, terminal status, remediation count, changed-file
 attribution, validation, and unresolved risks. Keep the conversation ID in a
 private routing record when the durable tracker is public.
+
+A successful receipt binds the task and actual workspace output; it does not prove
+that the output satisfies semantic or portable-byte acceptance. For exact text
+bytes across platforms, prefer repository-owned EOL policy and verify the
+immutable committed blob. Treat mutable worktree EOL as the acceptance boundary
+only when the contract intentionally requires host-specific materialization.
 
 After the worker produces an immutable candidate and the candidate gate passes,
 the coordinator may accept it directly when repository policy permits. Use a
