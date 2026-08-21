@@ -4,6 +4,22 @@ All notable changes to Task Conductor will be documented in this file.
 
 ## Unreleased
 
+## 0.1.1-preview - 2026-08-21
+
+### Added
+
+- A clean-room field observation covering one accepted coordinator-owned direct
+  worker, a controlled two-worker integration, and AGY wrapper and executor
+  failure boundaries.
+
+### Changed
+
+- Recorded the first passing subagent-first serial pilot, controlled two-worker
+  concurrent pilot, and accepted portable-EOL AGY pilot. The AGY case preserves
+  the earlier wrapper, terminal-status, receipt, Windows worktree-byte,
+  trusted-authorization, and service-retry failures instead of collapsing them
+  into the final success.
+
 ## 0.1.0-preview - 2026-08-20
 
 ### Added
