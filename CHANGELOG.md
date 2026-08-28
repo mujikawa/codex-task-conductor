@@ -2,7 +2,24 @@
 
 All notable changes to Task Conductor will be documented in this file.
 
-## Unreleased
+## 0.1.2-preview - 2026-08-29
+
+### Added
+
+- An anonymized public field observation of cost-aware AGY delegation across one
+  bounded worker and a four-outcome serial initiative.
+
+### Changed
+
+- AGY cycle guidance now separates an economics-based hard cap from evidence-based
+  convergence checkpoints instead of treating every higher cap as excess, and
+  defines immediate capability handoff to Codex before the cap is exhausted.
+- Dispatch packets now retain successful receipts through immutable candidate
+  acceptance, declare runtime-artifact ownership and structural-operation limits,
+  and avoid full-history inheritance unless needed for trusted authorization.
+- Measurement now reports AGY and Codex usage separately, records loop categories
+  and cost rationale, uses receipt-based per-invocation deltas without recounting
+  cumulative conversations, and treats lifecycle rollover as a first-class boundary.
 
 ## 0.1.1-preview - 2026-08-21
 

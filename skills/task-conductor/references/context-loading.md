@@ -53,6 +53,11 @@ Send one packet per bounded outcome:
 
 Do not attach full coordinator history, entire Issue discussions, unrelated diffs,
 raw test logs, or artifacts that the worker can locate from an exact reference.
+When the creation surface supports selecting inherited turns, use no inherited
+history or the smallest recent slice that contains indispensable trusted user
+authorization. Do not use a full-history fork merely for convenience. Put scope,
+state, and evidence in the compact packet; preserve direct user authorization only
+through a supported trusted-input mechanism.
 
 ## Model/tool cycle budget
 
@@ -171,6 +176,10 @@ major lifecycle boundary, or Codex surfaces a continuation or replacement task:
 Compaction within the same thread does not itself create a new ownership boundary.
 Create an independent coordinator task only when the product does so, the user
 requests it, or separate lifecycle ownership is otherwise authorized and material.
+Treat merge completion, a newly opened issue, a new authorization/risk boundary,
+or a switch from delivery to extended maintenance as a positive rollover signal.
+Reusing one coordinator is allowed, but it must not silently carry the prior
+initiative's full working context into a materially new outcome.
 
 ## Delivery-to-Ops boundary
 

@@ -74,6 +74,19 @@ When the executor is AGY, add the compact AGY delegation packet from
 `$delegate-to-agy`, review the resulting diff independently, and return Codex's
 verification rather than AGY's claims.
 
+Add these fields when an AGY loop budget is authorized:
+
+```text
+AGY economic hard cap: [maximum loops and cost rationale]
+Convergence checkpoint: [new finding, changed diff, or verification progress required after each loop]
+Early-stop conditions: [repeated no-progress failure, unsupported operation, deterministic failure, scope or authority boundary]
+Runtime artifacts: [environment, dependencies, caches, generated outputs, receipt retention, and authorized cleanup envelope]
+Capability handoff: [baseline, actual diff, completed criteria, remaining gap, unavailable operation, evidence, and next Codex action]
+```
+
+The hard cap is not a target. Preserve a user-selected higher cap when its economic
+rationale is explicit, while stopping early on the declared evidence conditions.
+
 ## Reviewer
 
 ```text
