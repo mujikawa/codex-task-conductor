@@ -20,8 +20,8 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.1-preview` release. The generic skill, adoption guidance,
-MIT license, release checklist, two serial observational case studies, and four
+This repository is the `v0.1.2-preview` release. The generic skill, adoption guidance,
+MIT license, release checklist, two serial observational case studies, and five
 field observations are present.
 
 The workflow has been exercised with serial independent tasks, a clean-room
@@ -55,11 +55,13 @@ docs/
 ├── adoption.md
 ├── case-study.md
 ├── field-observation-long-lifecycle.md
+├── field-observation-cost-aware-agy.md
 ├── field-observation-subagent-parallel-agy.md
 ├── field-observation-serial-gate-escape.md
 ├── field-observation-zero-dispatch.md
 ├── release-v0.1.0-preview.md
 ├── release-v0.1.1-preview.md
+├── release-v0.1.2-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -93,7 +95,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.1-preview.
+mujikawa/codex-task-conductor at ref v0.1.2-preview.
 ```
 
 Restart or reload Codex after installation, then open a fresh task and ask:
@@ -193,11 +195,19 @@ records the first direct subagent acceptance, a controlled two-worker integratio
 and the bounded AGY recovery sequence through the first accepted portable-EOL AGY
 delivery without treating partial or byte-invalid output as accepted evidence.
 
+The [cost-aware AGY orchestration field observation](docs/field-observation-cost-aware-agy.md)
+compares two anonymized delivery shapes: one coordinator-owned worker managing a
+single AGY invocation, and four serial outcomes using an economics-based hard cap
+of 10 AGY loops. It records convergence, receipt retention, runtime hygiene, and
+context-rollover lessons without presenting unlike token counters as a cost
+benchmark.
+
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
-See the [v0.1.1-preview release notes](docs/release-v0.1.1-preview.md) for the
-latest validation evidence and usage guidance. The
+See the [v0.1.2-preview release notes](docs/release-v0.1.2-preview.md) for the
+latest cost-aware AGY and context-control guidance. The
+[v0.1.1-preview notes](docs/release-v0.1.1-preview.md) and
 [v0.1.0-preview notes](docs/release-v0.1.0-preview.md) remain available for the
-original topology rationale and examples.
+earlier topology rationale and evidence.
 For destination, inventory, ownership, or topology failures, use the [dispatch troubleshooting guide](skills/task-conductor/references/troubleshooting.md).
 
 ## License

@@ -40,6 +40,37 @@ and validates them.
 - Preserve AGY host approval, sandbox, path validation, timeout, retry, and
   remediation limits from `$delegate-to-agy`; Task Conductor does not weaken them.
 
+## Loop economics and convergence
+
+Record the AGY loop budget as two separate controls:
+
+- an **economic hard cap**, which may be higher than the normal default when the
+  user deliberately prefers a lower-cost executor; and
+- a **convergence checkpoint** after every loop, requiring a new concrete finding,
+  changed evidence, or measurable progress toward the frozen acceptance gate.
+
+A hard cap such as 10 is a ceiling, not a target. Continue below that ceiling only
+while the diff or verification evidence is still converging. Stop early when the
+same failure repeats without a relevant change, the diff has no net progress, the
+operation is unsupported by AGY's permitted tools, scope drifts, new authority is
+needed, a deterministic infrastructure failure occurs, or the cap is exhausted.
+Do not reduce an explicitly authorized economics-based cap merely because its
+number is larger than the default.
+
+When AGY identifies that the remaining work is outside its capability or permitted
+tool boundary, stop immediately and return a Codex handoff packet. Include the
+immutable or recorded baseline, actual diff, completed acceptance criteria,
+remaining gap, failed or unavailable operation, validation evidence, receipt and
+private routing location, and the smallest next Codex action. This is a normal
+executor handoff within the owning worker, not permission to widen scope. Codex may
+finish only work already inside the worker's authorization and must independently
+review the combined result.
+
+Count initial implementation, product remediation, verification-only remediation,
+transient infrastructure retry, and Codex catch-up separately. AGY and Codex usage
+must remain separate unless their measurement units and prices are demonstrably
+equivalent.
+
 ## Compact AGY delegation packet
 
 Add these fields to the normal worker packet:
@@ -51,12 +82,30 @@ Add these fields to the normal worker packet:
 - relevant existing changes and repository instructions
 - focused checks and frozen candidate gate
 - AGY implementation and remediation cycle budget
+- economic rationale, hard cap, and per-loop convergence checkpoint
 - stop conditions for scope drift, non-`SUCCESS`, credentials, new authority, or
   exhausted remediation
 - private location for the AGY conversation ID and terminal evidence
+- runtime-artifact ownership for environments, dependency trees, caches, generated
+  outputs, and the exact cleanup envelope when one is authorized
+- capability-handoff contract and the evidence AGY must leave for Codex
 
 Do not embed secrets, environment values, unrelated repository content, or the
 coordinator's full history.
+
+Preflight the declared validation command and runtime requirements in the linked
+worktree before AGY starts. Prefer delegation before creating large ignored
+runtime trees when practical. If dependencies or generated artifacts are needed,
+declare who may create, reuse, or remove them. Do not delete or rebuild an
+environment merely to satisfy wrapper cleanliness. When the user authorizes a
+bounded cleanup envelope, validate exact paths and reparse-point boundaries before
+using it.
+
+If the requested change requires a structural operation AGY cannot perform under
+its permitted tools, such as deleting a tracked file, stop that AGY loop and route
+the exact operation back to Codex under the existing authorization boundary. Do
+not consume repeated AGY loops producing empty placeholder files or equivalent
+non-solutions.
 
 ## Evidence and acceptance
 
@@ -69,6 +118,12 @@ The worker completion record must distinguish AGY claims from Codex-verified
 results and include AGY version, terminal status, remediation count, changed-file
 attribution, validation, and unresolved risks. Keep the conversation ID in a
 private routing record when the durable tracker is public.
+
+Keep the successful receipt and private routing record until the immutable
+candidate exists and the frozen candidate gate has passed. Removing them after
+focused checks can make a later evidence-driven remediation impossible. Exclude
+them from the accepted commit and remove them only at the declared lifecycle
+cleanup point.
 
 A successful receipt binds the task and actual workspace output; it does not prove
 that the output satisfies semantic or portable-byte acceptance. For exact text

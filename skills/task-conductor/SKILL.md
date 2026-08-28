@@ -122,6 +122,10 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 - For an independent task, resolve the formal task ID with a supported mapping or status capability when available. A missing recent-inventory entry alone does not prove that setup is pending or that execution has not started. Respect inventory bounds and corroborate ownership with Git and durable state.
 - Require the worker to inspect current durable state before editing and to return the worker completion contract.
 - When the executor is AGY, dispatch a Codex worker with an explicit instruction to use `$delegate-to-agy`. The Codex worker owns baseline capture, AGY invocation, independent diff review, validation, and bounded remediation; the coordinator does not accept AGY's response or terminal status as delivery evidence.
+- For AGY, separate an economics-based hard cap from the per-loop convergence
+  checkpoint. A user may deliberately authorize a higher cap for a lower-cost
+  executor; continue only while new evidence shows progress and keep AGY and Codex
+  usage accounting separate.
 - Do not allow workers to create nested tasks or subagents unless the user explicitly authorizes that additional topology.
 - Use and tailor the templates in `references/task-prompts.md`.
 

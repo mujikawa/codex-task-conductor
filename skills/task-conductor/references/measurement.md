@@ -44,6 +44,17 @@ a Codex task root. Record AGY invocations and remediation passes separately when
 available; do not combine AGY-reported usage with Codex token totals unless the
 measurement source and units are equivalent.
 
+For an AGY-enabled outcome, also record the declared economic hard cap, observed
+loops by category, early-stop reason, and the user's stated cost rationale when
+available. A higher hard cap can be rational when the external executor is less
+expensive, but it does not establish lower total workflow cost. Compare AGY and
+Codex prices only with an explicit common currency, equivalent token definitions,
+and the observation-date pricing; otherwise publish the counters side by side.
+Use the delegation receipt's per-invocation `usage_delta` for loop accounting.
+Preserve AGY's `usage_cumulative` as conversation evidence, but do not count the
+cumulative value again on each remediation. A cache hit or approval rejection
+before AGY starts is not an AGY loop and contributes no invocation usage record.
+
 Report completed outcomes separately from accepted outcomes. A `needs_followup` result can be a completed bounded review without being accepted delivery evidence.
 
 ## Context-loading profile
@@ -58,6 +69,9 @@ When per-call telemetry is retained, record by workflow component:
 - automatic-review share of uncached input
 
 Do not describe cumulative input as unique content loaded. Cached input can represent a repeated prompt, instruction, tool, or conversation prefix. Uncached input is cache-missed input, not a semantic count of new information.
+Likewise, a high cached-input ratio does not make repeated coordinator or worker
+cycles free. Treat full-history inheritance, repeated broad reads, and long
+lifecycle reuse as workload-shape signals rather than causal proof.
 
 If raw per-call telemetry is missing for any included task, keep aggregate counters when they can be derived from the frozen snapshot, but report call count, median, maximum, and compaction as `unavailable` for the incomplete group. Do not extrapolate from retained tasks.
 
