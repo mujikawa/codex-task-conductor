@@ -54,6 +54,7 @@ Required validation: [commands and evidence]
 Branch/worktree: Use the dedicated task branch and worktree from [pinned base].
 Runtime ownership: [environment, cache, port, database, generated-output paths and permitted lifecycle actions]
 Authorization boundaries: [boundaries]
+Inherited context: [none | smallest recent slice containing trusted authorization | evidenced full-history exception]
 Language: [requested language or inherit]
 
 Read current durable state and repository instructions before editing. Do not create nested subagents or tasks. Return the worker completion contract.
@@ -66,6 +67,7 @@ Model/tool cycle budget: [phase budgets or observable-loop proxy]
 Correction envelope: [exact mutable scope, allowed correction loops, focused checks, broad-gate allowance]
 Stop conditions: [budget boundary, failed gate, authorization boundary]
 Evidence locations: [exact durable references; do not embed raw history]
+Validation ownership: [worker semantic/focused checks | immutable-candidate broad gate owner | integration gate owner]
 Frozen candidate gate: [exact repository-wide commands required before review and acceptance]
 ```
 
@@ -81,6 +83,8 @@ AGY economic hard cap: [maximum loops and cost rationale]
 Convergence checkpoint: [new finding, changed diff, or verification progress required after each loop]
 Early-stop conditions: [repeated no-progress failure, unsupported operation, deterministic failure, scope or authority boundary]
 Runtime artifacts: [environment, dependencies, caches, generated outputs, receipt retention, and authorized cleanup envelope]
+Execution order: [wrapper ValidateOnly | AGY semantic/remediation phase | runtime materialization | focused checks | broad gate]
+Objective-specific probe: [required non-empty diff, final files/directories, structural metrics, or value-equivalence evidence]
 Capability handoff: [baseline, actual diff, completed criteria, remaining gap, unavailable operation, evidence, and next Codex action]
 ```
 

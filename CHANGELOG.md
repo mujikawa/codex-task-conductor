@@ -2,6 +2,18 @@
 
 All notable changes to Task Conductor will be documented in this file.
 
+## 0.1.3-preview - 2026-08-29
+
+### Changed
+
+- Worker dispatch now records the smallest trusted-context inheritance needed for
+  authorization instead of treating full-history inheritance as a convenience.
+- Validation is assigned across objective-specific worker probes, one immutable-
+  candidate broad gate, and one integration gate, with duplicate broad runs
+  requiring an explicit reason.
+- AGY packets now declare final output shape, validation-only preflight, semantic
+  no-op and structural probes, and remediation-before-runtime sequencing.
+
 ## 0.1.2-preview - 2026-08-29
 
 ### Added
