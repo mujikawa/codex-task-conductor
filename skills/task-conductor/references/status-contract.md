@@ -19,6 +19,15 @@ Allowed statuses:
 
 The dashboard is transient. The repository-declared tracker is durable.
 
+## Outcome manifest
+
+Keep one durable row per bounded outcome with its outcome ID, worker routing ID,
+immutable commit, PR or publication identifier, acceptance state, and Ops state.
+Treat missing values as explicit `none` or `unavailable`. Compute summary counts
+from these rows and reconcile every reported identifier to exactly one row. Do
+not hand-count an inclusive PR range or copy a narrative total that can drift from
+the manifest.
+
 Keep the durable record layered when possible:
 
 - stable specification and Definition of Done
@@ -62,7 +71,8 @@ rereview, and republication evidence separately.
 
 Acceptance verifies evidence. It does not authorize deployment, destructive actions, merge bypasses, or other owner-only operations.
 
-After acceptance, record whether the next action remains an authorized bounded
+After acceptance, freeze the delivery manifest and measurement cutoff, then record
+whether the next action remains an authorized bounded
 handoff or requires a separately tracked Ops outcome. The Ops outcome needs new
 authorization, an explicit subagent or independent-task topology, its own dispatch
 packet, and a separate measurement boundary.

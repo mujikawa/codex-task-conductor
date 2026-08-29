@@ -54,6 +54,7 @@ Required validation: [commands and evidence]
 Branch/worktree: Use the dedicated task branch and worktree from [pinned base].
 Runtime ownership: [environment, cache, port, database, generated-output paths and permitted lifecycle actions]
 Authorization boundaries: [boundaries]
+Authorization anchor: [trusted user turn or standing-policy boundary]
 Inherited context: [none | smallest recent slice containing trusted authorization | evidenced full-history exception]
 Language: [requested language or inherit]
 
@@ -80,6 +81,7 @@ Add these fields when an AGY loop budget is authorized:
 
 ```text
 AGY economic hard cap: [maximum loops and cost rationale]
+External disclosure authorization: [trusted user turn plus exact private paths or content classes]
 Convergence checkpoint: [new finding, changed diff, or verification progress required after each loop]
 Early-stop conditions: [repeated no-progress failure, unsupported operation, deterministic failure, scope or authority boundary]
 Runtime artifacts: [environment, dependencies, caches, generated outputs, receipt retention, and authorized cleanup envelope]
@@ -149,6 +151,7 @@ Durable tracker: [tracker and accepted delivery record]
 Environment and rollback boundary: [facts]
 Rehearsal evidence: [same-platform syntax, fixture, topology, or dry-run evidence required before live mutation]
 Required checks and evidence: [checks and stable locations]
+Delivery cutoff: [accepted manifest, immutable target, timestamp, and frozen telemetry]
 Model/tool cycle budget: [budget or observable-loop proxy]
 Stop conditions: [failed preflight, drift, budget, or authorization boundary]
 Language: [requested language or inherit]

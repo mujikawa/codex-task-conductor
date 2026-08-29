@@ -31,6 +31,12 @@ and validates them.
   boundary, do not bypass it in the coordinator or repeatedly resend the same
   relay. Create a replacement only after the user explicitly authorizes that
   topology and the replacement can directly inherit the authorization.
+- Record an authorization anchor and the exact private paths or content classes
+  permitted for disclosure. Before dispatch, verify that the chosen inherited
+  slice contains that trusted user input; a numeric turn count by itself is not
+  proof. If the approval boundary rejects disclosure before process creation,
+  record zero AGY invocations and use the declared Codex handoff without retrying
+  the same relay.
 - Give the Codex worker a clean linked Git worktree from the pinned base. Do not
   use the main worktree for unattended AGY automation.
 - Assign exactly one write-capable owner to that worktree. The coordinator and any
@@ -93,6 +99,9 @@ Add these fields to the normal worker packet:
 - objective-specific semantic probes that distinguish a meaningful result from a
   no-op or merely syntactic `SUCCESS`
 - capability-handoff contract and the evidence AGY must leave for Codex
+- handoff category: `runtime_materialized`, `runtime_only_finding`,
+  `unsupported_operation`, `external_disclosure_denied`, or another concise
+  evidence-backed category
 
 Do not embed secrets, environment values, unrelated repository content, or the
 coordinator's full history.

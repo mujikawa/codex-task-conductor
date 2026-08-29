@@ -19,6 +19,10 @@ Measure the workflow without turning telemetry into a new source of overhead.
 - outcome state as `accepted`, `needs_followup`, `blocked`, or another declared status
 - creation topology for each root: independent task, background subagent, or manual execution
 - implementation executor for each worker: Codex direct or externally delegated
+- outcome-manifest rows and derived worker, commit, PR, accepted, and deployed
+  counts, including reconciliation mismatches
+- authorization-anchor visibility at dispatch, plus pre-process external-delegation
+  rejections that produced zero executor invocations
 
 Use `unavailable` for missing telemetry. Do not estimate private reasoning tokens, cached tokens, or active time from wall-clock duration.
 
@@ -54,8 +58,15 @@ Use the delegation receipt's per-invocation `usage_delta` for loop accounting.
 Preserve AGY's `usage_cumulative` as conversation evidence, but do not count the
 cumulative value again on each remediation. A cache hit or approval rejection
 before AGY starts is not an AGY loop and contributes no invocation usage record.
+Record that event separately with its boundary and handoff result so a safe
+zero-invocation stop is not misreported as executor failure or product remediation.
 
 Report completed outcomes separately from accepted outcomes. A `needs_followup` result can be a completed bounded review without being accepted delivery evidence.
+
+Report coordinator, worker, reviewer, automatic approval-review, publication, and
+Ops usage separately when the logs permit it. Automatic-review overhead is part
+of workflow cost even when most input is cached. Do not add external-executor
+usage to Codex totals when accounting definitions differ.
 
 ## Context-loading profile
 

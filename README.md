@@ -20,9 +20,9 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.2-preview` release. The generic skill, adoption guidance,
+This repository is the `v0.1.4-preview` release. The generic skill, adoption guidance,
 MIT license, release checklist, two serial observational case studies, and five
-field observations are present.
+field observations plus one autonomous-release observation are present.
 
 The workflow has been exercised with serial independent tasks, a clean-room
 coordinator-owned subagent, and a controlled two-worker concurrent pilot with an
@@ -55,6 +55,7 @@ docs/
 ├── adoption.md
 ├── case-study.md
 ├── field-observation-long-lifecycle.md
+├── field-observation-autonomous-release.md
 ├── field-observation-cost-aware-agy.md
 ├── field-observation-subagent-parallel-agy.md
 ├── field-observation-serial-gate-escape.md
@@ -62,6 +63,8 @@ docs/
 ├── release-v0.1.0-preview.md
 ├── release-v0.1.1-preview.md
 ├── release-v0.1.2-preview.md
+├── release-v0.1.3-preview.md
+├── release-v0.1.4-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -95,7 +98,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.3-preview.
+mujikawa/codex-task-conductor at ref v0.1.4-preview.
 ```
 
 Restart or reload Codex after installation, then open a fresh task and ask:
@@ -202,9 +205,16 @@ of 10 AGY loops. It records convergence, receipt retention, runtime hygiene, and
 context-rollover lessons without presenting unlike token counters as a cost
 benchmark.
 
+The [autonomous release field observation](docs/field-observation-autonomous-release.md)
+records nine serial coordinator-owned outcomes, selective AGY execution, GitHub
+lifecycle, and rollback-protected production deployment. It motivates verified
+authorization anchors, reconciled manifests, and a frozen Delivery-to-Ops cutoff.
+
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
-See the [v0.1.2-preview release notes](docs/release-v0.1.2-preview.md) for the
-latest cost-aware AGY and context-control guidance. The
+See the [v0.1.4-preview release notes](docs/release-v0.1.4-preview.md) for the
+latest authorization-anchor, manifest, and Delivery-to-Ops guidance. The
+[v0.1.3-preview notes](docs/release-v0.1.3-preview.md),
+[v0.1.2-preview notes](docs/release-v0.1.2-preview.md),
 [v0.1.1-preview notes](docs/release-v0.1.1-preview.md) and
 [v0.1.0-preview notes](docs/release-v0.1.0-preview.md) remain available for the
 earlier topology rationale and evidence.

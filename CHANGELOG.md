@@ -2,6 +2,26 @@
 
 All notable changes to Task Conductor will be documented in this file.
 
+## 0.1.4-preview - 2026-08-30
+
+### Added
+
+- An anonymized field observation of a nine-outcome autonomous release that
+  continued through GitHub lifecycle and a rollback-protected production cutover.
+- A durable outcome manifest with derived and reconciled worker, commit, PR,
+  acceptance, and deployment counts.
+
+### Changed
+
+- Trusted-context dispatch now verifies the authorization-bearing user turn is
+  actually present instead of treating a fixed inherited-turn count as proof.
+- Delivery acceptance now freezes its manifest, immutable target, time, and token
+  cutoff before publication or Ops, even when both phases share one user turn.
+- High-risk integrated releases may use one final read-only reviewer without
+  multiplying broad gates or creating a reviewer for every outcome.
+- Measurement separates zero-invocation delegation rejections, automatic approval
+  review, capability handoffs, and external-executor accounting.
+
 ## 0.1.3-preview - 2026-08-29
 
 ### Changed

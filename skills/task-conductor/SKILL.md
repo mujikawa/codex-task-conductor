@@ -60,7 +60,14 @@ Split only at independently verifiable outcomes. Record for each outcome:
 - implementation executor and external conversation routing when applicable
 - integration order
 - authorization boundaries
+- authorization anchors: the trusted user turn or standing-policy boundary that
+  authorizes topology, external disclosure, and each external side effect
 - one next action
+
+Maintain one outcome manifest keyed by durable outcome ID. Derive worker, commit,
+PR, accepted, and deployed counts from that manifest instead of hand-counting a
+range or narrative summary. Reconcile every published identifier back to exactly
+one manifest row before closing the initiative.
 
 Keep product specification, lifecycle dashboard, and detailed evidence separate
 when the tracker supports it. Do not turn one specification file into an
@@ -113,7 +120,9 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 - Record the inherited-context choice for every worker. When trusted user
   authorization must be inherited, select the smallest recent-turn slice that
   contains that authorization and supply scope and evidence through the compact
-  packet. Treat a full-history fork as an evidenced exception, not the default.
+  packet. Before dispatch, verify that the selected slice actually contains the
+  authorization-bearing user turn; a fixed turn count is not evidence by itself.
+  Treat a full-history fork as an evidenced exception, not the default.
 - Declare a model/tool cycle budget and stop condition for every worker and reviewer. A budget limits loops; it does not override required verification.
 - When explicitly authorized, declare a correction envelope with exact mutable
   files or components, permitted evidence-driven correction loops, and the single
@@ -174,6 +183,12 @@ Independently verify:
 
 Mark an outcome accepted only when evidence is sufficient. Worker confidence is not evidence.
 
+For a release that combines several outcomes and crosses into migration or live
+deployment, prefer one final read-only integrated reviewer after the immutable
+integration gate when risk warrants independent assurance. Do not create one
+reviewer per outcome by default or repeat the same broad gate solely to add an
+actor.
+
 ## 9. Stop and hand off
 
 Stop when the initiative is complete, a dependency requires user authority, or remaining work cannot be safely split. Write accepted and blocked outcomes, evidence, execution profiles, decisions, topology, and one next action to the durable tracker. Do not create a competing coordinator backlog.
@@ -187,5 +202,11 @@ a narrower current-turn statement. If the announced action list changes after a
 policy read, stop and restate or obtain authorization before acting.
 
 After delivery acceptance, apply the delivery-to-Ops boundary in `references/context-loading.md`. Continue only for an already authorized bounded handoff; otherwise propose a separately authorized Ops outcome. Use an independent Ops task when its lifecycle must be user-owned; otherwise an explicitly authorized subagent may perform bounded Ops work under the current coordinator. Give either topology its own packet and measurement cutoff.
+
+Freeze and record the delivery manifest, accepted target, elapsed-time cutoff,
+and token counters before the first publication, migration, deployment, or live
+operation. A same-turn continuation does not remove this boundary. Prefer a
+coordinator rollover at this point when compaction has occurred or the remaining
+Ops work is material.
 
 Record token and elapsed-time telemetry when available, but do not invent missing values or claim causation from one observation.
