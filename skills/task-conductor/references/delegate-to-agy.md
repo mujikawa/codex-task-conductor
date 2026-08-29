@@ -79,6 +79,8 @@ Add these fields to the normal worker packet:
 - objective and acceptance criteria
 - canonical linked-worktree root
 - exact relative read paths, write paths, and out-of-scope paths
+- expected final output shape, including every file or directory that a valid
+  structural result must create, move, or replace
 - relevant existing changes and repository instructions
 - focused checks and frozen candidate gate
 - AGY implementation and remediation cycle budget
@@ -88,16 +90,25 @@ Add these fields to the normal worker packet:
 - private location for the AGY conversation ID and terminal evidence
 - runtime-artifact ownership for environments, dependency trees, caches, generated
   outputs, and the exact cleanup envelope when one is authorized
+- objective-specific semantic probes that distinguish a meaningful result from a
+  no-op or merely syntactic `SUCCESS`
 - capability-handoff contract and the evidence AGY must leave for Codex
 
 Do not embed secrets, environment values, unrelated repository content, or the
 coordinator's full history.
 
-Preflight the declared validation command and runtime requirements in the linked
-worktree before AGY starts. Prefer delegation before creating large ignored
-runtime trees when practical. If dependencies or generated artifacts are needed,
-declare who may create, reuse, or remove them. Do not delete or rebuild an
-environment merely to satisfy wrapper cleanliness. When the user authorizes a
+Preflight the AGY task with the wrapper's validation-only mode and preflight the
+declared validation command and runtime requirements before AGY starts. Include
+the final intended module directories in the initial write paths; a successful
+receipt does not authorize later path expansion.
+
+When practical, use this order: AGY implementation, diff and objective-specific
+semantic review, evidence-driven AGY remediation, runtime dependency
+materialization, focused checks, then the single owned broad gate. Large ignored
+runtime trees can make a later wrapper remediation fail its clean-baseline safety
+check. If tests require those trees before remediation, declare that constraint
+and the Codex capability-handoff path in advance. Do not delete or rebuild an
+environment merely to regain wrapper eligibility. When the user authorizes a
 bounded cleanup envelope, validate exact paths and reparse-point boundaries before
 using it.
 
@@ -113,6 +124,13 @@ The Codex worker must capture the baseline, invoke AGY, inspect actual changes,
 run relevant checks, and perform the independent review required by
 `$delegate-to-agy`. AGY's response and `SUCCESS` status are execution evidence,
 not Task Conductor acceptance evidence.
+
+Immediately after each `SUCCESS`, run the declared objective-specific probe before
+expensive broad validation. When the baseline did not already satisfy the
+Definition of Done, an unexplained no-op diff, missing target directory, increased
+monolith size in a decomposition task, unchanged required metric, or failed
+value-equivalence check is a concrete remediation finding even when the receipt is
+valid. Count pre-process validation rejection separately; it is not an AGY loop.
 
 The worker completion record must distinguish AGY claims from Codex-verified
 results and include AGY version, terminal status, remediation count, changed-file

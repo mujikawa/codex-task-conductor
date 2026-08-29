@@ -95,7 +95,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.2-preview.
+mujikawa/codex-task-conductor at ref v0.1.3-preview.
 ```
 
 Restart or reload Codex after installation, then open a fresh task and ask:

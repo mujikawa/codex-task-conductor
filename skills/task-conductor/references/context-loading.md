@@ -8,7 +8,9 @@ directly control prompt caching, `reasoning.context`, or compaction thresholds.
 
 - Context budget gate
 - Compact dispatch packet
+- Trust-preserving inheritance
 - Model/tool cycle budget
+- Layered validation ownership
 - Review readiness gate
 - Compact acceptance packet
 - Input reduction rules
@@ -46,6 +48,7 @@ Send one packet per bounded outcome:
   create, reuse, rebuild, normalize, and cleanup actions
 - required validation and evidence locations
 - authorization boundaries and declared execution profile
+- inherited-context selection and the trusted authorization it must preserve
 - implementation executor; for AGY, include the allowed paths, AGY cycle budget,
   and location of the private conversation-routing record
 - model/tool cycle budget and stop conditions
@@ -58,6 +61,22 @@ history or the smallest recent slice that contains indispensable trusted user
 authorization. Do not use a full-history fork merely for convenience. Put scope,
 state, and evidence in the compact packet; preserve direct user authorization only
 through a supported trusted-input mechanism.
+
+## Trust-preserving inheritance
+
+Choose inherited context separately from the dispatch packet:
+
+- use no inherited turns when the packet and durable sources are sufficient;
+- use the smallest recent-turn slice that directly includes indispensable user
+  authorization when the worker or its external executor must prove trusted
+  authorization at a host boundary;
+- use full history only when a narrower supported slice cannot preserve the
+  required trust or decision context.
+
+Record the selection, the authorization-bearing turn or boundary it preserves,
+and why a narrower option was insufficient. Do not copy the same history into the
+packet. Full-history inheritance is a measurable context-cost decision, not a
+substitute for a complete scope packet.
 
 ## Model/tool cycle budget
 
@@ -90,6 +109,22 @@ user and repository policy permit it. Record:
 The envelope ends on material scope drift, a new external side effect, credential
 or permission work, deployment risk, destructive cleanup, or exhausted loops. It
 does not convert a bounded outcome into open-ended authority.
+
+## Layered validation ownership
+
+Declare one owner for each validation layer before dispatch:
+
+- the worker runs objective-specific semantic probes and the narrowest checks
+  needed to find implementation defects;
+- the immutable-candidate owner runs the frozen repository-wide candidate gate
+  once after focused checks pass;
+- the coordinator runs the integration gate once after outcomes are combined.
+
+Do not automatically run the same broad gate in both a mutable worker worktree and
+again in coordinator acceptance. A second broad run requires a relevant code or
+environment change, an inconclusive infrastructure failure, repository policy, or
+an explicit risk rationale. Record sandbox-to-host retries as one logical gate with
+separate attempts, not as independent product-validation cycles.
 
 ## Review readiness gate
 
@@ -129,10 +164,12 @@ Record the final decision and evidence in durable state, not by preserving chat.
 
 ## Input reduction rules
 
-- **Tests:** Run the narrowest relevant checks first. Retain command, exact result,
+- **Tests:** Run objective-specific semantic probes and the narrowest relevant
+  checks first. Retain command, exact result,
   and a short failure excerpt. Load full logs only to diagnose a current failure.
-  Run each required broad gate once after focused checks pass, and rerun it only
-  after a relevant change or an inconclusive infrastructure failure.
+  Run each required broad gate once under its declared owner after focused checks
+  pass, and rerun it only after a relevant change, an inconclusive infrastructure
+  failure, or a repository-mandated second boundary.
 - **Diffs:** Start with base/HEAD, status, changed-file names, and diff statistics.
   Load targeted hunks for contract, risk, or failure analysis. Load the full diff
   only when scope is small or the acceptance decision requires cross-file review.

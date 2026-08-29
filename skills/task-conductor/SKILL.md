@@ -110,6 +110,10 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 
 - Prefer a fresh coordinator-owned subagent with a compact packet over loading the coordinator's full history into a worker. Do not use full-history forks when a compact packet is sufficient.
 - Apply the context budget gate and send the compact dispatch packet in `references/context-loading.md`. Do not copy full prior-task histories.
+- Record the inherited-context choice for every worker. When trusted user
+  authorization must be inherited, select the smallest recent-turn slice that
+  contains that authorization and supply scope and evidence through the compact
+  packet. Treat a full-history fork as an evidenced exception, not the default.
 - Declare a model/tool cycle budget and stop condition for every worker and reviewer. A budget limits loops; it does not override required verification.
 - When explicitly authorized, declare a correction envelope with exact mutable
   files or components, permitted evidence-driven correction loops, and the single
@@ -152,6 +156,13 @@ review and delivery acceptance. When a required gate can run only after combinin
 outcomes, keep the initiative at `integrating` until the shared gate passes. Do not
 publish an `accepted` claim or close the outcome first. Treat any later required-gate
 failure as an escaped acceptance defect and record its rework separately.
+
+Assign validation ownership before dispatch. Workers normally run objective-
+specific semantic probes and focused checks; the actor that creates or owns the
+immutable candidate runs the frozen repository-wide gate once. Run the integrated
+gate once after combined outcomes. Repeat a broad gate in both worker and
+coordinator only when repository policy, a relevant intervening change, or the
+declared risk requires it, and record that reason.
 
 Independently verify:
 
