@@ -48,7 +48,8 @@ Send one packet per bounded outcome:
   create, reuse, rebuild, normalize, and cleanup actions
 - required validation and evidence locations
 - authorization boundaries and declared execution profile
-- inherited-context selection and the trusted authorization it must preserve
+- inherited-context selection, authorization anchor, and the trusted user turn or
+  policy boundary it must preserve
 - implementation executor; for AGY, include the allowed paths, AGY cycle budget,
   and location of the private conversation-routing record
 - model/tool cycle budget and stop conditions
@@ -74,9 +75,12 @@ Choose inherited context separately from the dispatch packet:
   required trust or decision context.
 
 Record the selection, the authorization-bearing turn or boundary it preserves,
-and why a narrower option was insufficient. Do not copy the same history into the
-packet. Full-history inheritance is a measurable context-cost decision, not a
-substitute for a complete scope packet.
+and why a narrower option was insufficient. Verify the selected slice contains
+that trusted input before dispatch; recording `3 turns` or another numeric slice
+alone is not proof. For external executors, also record the exact private paths or
+content classes the authorization permits disclosing. Do not copy the same
+history into the packet. Full-history inheritance is a measurable context-cost
+decision, not a substitute for a complete scope packet.
 
 ## Model/tool cycle budget
 
@@ -222,6 +226,11 @@ initiative's full working context into a materially new outcome.
 
 After delivery acceptance, classify the next action before continuing:
 
+- Freeze the delivery outcome manifest, accepted immutable target, acceptance
+  timestamp, elapsed-time cutoff, and the last available token counters before
+  the first Ops action. Derive reported counts from the manifest and reconcile
+  every commit, PR, or release identifier to one outcome row.
+
 - Keep it in the current task only when it is a bounded recording or handoff action
   already authorized and uses the same risk boundary.
 - Propose a separately tracked Ops outcome when work changes authorization, credentials,
@@ -235,6 +244,11 @@ After delivery acceptance, classify the next action before continuing:
   separately. Do not widen a narrower action list announced in the current turn by
   later relying on standing policy; restate or request authorization first.
 - If no Ops task is authorized, stop after recording the owner action and evidence.
+
+When delivery and Ops remain in one user turn, preserve the cutoff anyway. Prefer
+a context rollover before material deployment or migration when compaction has
+occurred, the coordinator is reconstructing state, or the Ops packet is no longer
+compact.
 
 
 Start a new outcome when an Ops phase adds a new product or infrastructure change,
