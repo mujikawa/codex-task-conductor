@@ -9,6 +9,7 @@ Measure the workflow without turning telemetry into a new source of overhead.
 - wall-clock elapsed time
 - active agent time and tool/test wait time when distinguishable
 - number of worker and follow-up tasks
+- bounded waits, unchanged polls, and commentary emitted without a material state change
 - repeated full-context reads and full verification reruns
 - product correction loops, infrastructure recovery attempts, review cycles,
   publication cycles, and full-gate reruns as separate counters
@@ -21,6 +22,8 @@ Measure the workflow without turning telemetry into a new source of overhead.
 - implementation executor for each worker: Codex direct or externally delegated
 - outcome-manifest rows and derived worker, commit, PR, accepted, and deployed
   counts, including reconciliation mismatches
+- publication PR count, recursive tracker-finalization cycles, and residual cleanup
+  refs or directories at the cutoff
 - authorization-anchor visibility at dispatch, plus pre-process external-delegation
   rejections that produced zero executor invocations
 

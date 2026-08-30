@@ -38,6 +38,19 @@ Keep the durable record layered when possible:
 Do not copy every commentary update, command transcript, or authorization exchange
 into the stable specification. Preserve only decision-relevant history.
 
+For delivered outcomes, record lifecycle facets separately:
+
+| Facet | Example states |
+| --- | --- |
+| Delivery | `needs_followup`, `accepted` |
+| Publication | `not-authorized`, `pending`, `merged` |
+| Reconciliation | `not-required`, `pending`, `complete` |
+| Cleanup | `not-authorized`, `cleanup-ready`, `cleanup-pending-host-release`, `complete` |
+
+Do not collapse these facets into one `complete` label. When cleanup is blocked by
+an active task or host handle, record the exact preserved refs or paths and one
+safe next action without changing an accepted delivery back to `needs_followup`.
+
 ## Worker completion contract
 
 Return:

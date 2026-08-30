@@ -101,6 +101,8 @@ Review only [outcome] at [repository, branch, HEAD, or review target].
 Definition of Done: [criteria]
 Required checks: [checks]
 Known risks: [risks]
+Semantic probes: [outcome-specific boundary values, least-privilege reachability,
+reversible state transitions, and adjacent negative controls that apply]
 Language: [requested language or inherit]
 
 Do not implement fixes or broaden scope. Return evidence and an accept or needs_followup recommendation.
@@ -109,6 +111,10 @@ Do not implement fixes or broaden scope. Return evidence and an accept or needs_
 Start a reviewer only after the review readiness gate passes. Populate its prompt
 from the compact acceptance packet; do not attach worker chat, full Issue history,
 or raw logs when stable evidence locations are available.
+
+Do not ask the reviewer to rerun the frozen repository-wide gate solely to add an
+actor. Review the immutable target and test evidence, then exercise the
+decision-critical semantic risks that the broad suite may not cover.
 
 ## Parallel pilot
 

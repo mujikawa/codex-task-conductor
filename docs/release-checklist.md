@@ -56,11 +56,11 @@ repository-scoped skill link left no instruction or governance file behind.
 - [ ] Exercise a case where the formal task exists but recent-task inventory omits it; confirm the coordinator reports `formal ID unresolved / execution unknown`, not `setup pending` or `worker not started`.
 - [x] Supply a formal task ID through an independent trusted surface and confirm destination, title, repository, branch, and worktree metadata are verified before monitoring.
 - [x] Capture a fixed start, cutoff, included roots/descendants, outcome states, model/effort, token categories, and elapsed-time definition.
-- [ ] Complete a serial pilot where the full frozen repository-wide candidate gate
+- [x] Complete a serial pilot where the full frozen repository-wide candidate gate
   passes on the immutable target before acceptance and publication.
-- [ ] Exercise environment ownership preflight and confirm unapproved deletion,
+- [x] Exercise environment ownership preflight and confirm unapproved deletion,
   recreation, normalization, and cleanup stop before mutation.
-- [ ] Exercise publication authorization with push, PR, merge, reconciliation, and
+- [x] Exercise publication authorization with push, PR, merge, reconciliation, and
   cleanup enumerated separately; confirm a narrower current-turn statement is not widened.
 - [x] For a stable parallel claim, complete a controlled two-worker pilot with every parallel readiness gate satisfied and an integration acceptance gate.
 
@@ -112,6 +112,19 @@ integrated them in the declared A-then-B order, and passed the frozen two-file
 integration gate on a clean worktree. This validates controlled concurrency and
 integration acceptance, not token savings or hardware-level simultaneous
 execution. Worker token and active-time telemetry were unavailable.
+
+Forward lifecycle evidence (2026-08-31): one authorized vertical-slice delivery
+used a serial foundation pilot, two non-overlapping feature workers, one
+integration writer, two independent reviewers, and one bounded correction
+worker. The immutable product target passed the complete repository quick and
+delivery gates before publication. Runtime preflight reused declared Python and
+Node environments without rebuilding or normalizing them, and cleanup stopped
+safely when live Windows handles retained empty directories and a preserved ref.
+Publication authorization enumerated issue, branch, worktree, commit, push, PR,
+merge, reconciliation, and cleanup actions. Three CI-verified PRs merged, although
+the second tracker-only finalization exposed a recursive reconciliation pattern
+that the unreleased guidance now prohibits by default. See
+`field-observation-subagent-delivery-lifecycle.md`.
 
 ## Publication
 
@@ -215,5 +228,6 @@ remain omitted. No push, merge, PR, deployment, or cleanup occurred.
 ## Remaining preview blockers
 
 - A fresh case where a formal task already exists while bounded inventory omits it has not yet been reproduced.
-- The post-observation candidate-gate, runtime-ownership, and publication-wording
-  guardrails have not yet passed a clean forward pilot.
+- The newly added single broad-gate owner, adaptive monitoring, finite
+  reconciliation, and lifecycle-facet controls have not yet passed a clean
+  forward pilot.
