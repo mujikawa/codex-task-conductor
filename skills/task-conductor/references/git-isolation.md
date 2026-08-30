@@ -53,6 +53,13 @@ Record the expected cleanup point instead of deferring all worktree and branch
 inventory to the end of a long initiative. Cleanup remains a separately authorized
 destructive lifecycle action.
 
+If a live task, process, or Windows directory handle prevents safe cleanup after
+the commits are preserved, classify the facet as
+`cleanup-pending-host-release`. Record worktree registration, residual branch
+refs, remaining directory contents, and the next safe retry point. Do not use
+force-removal, recursive deletion, or a cross-shell workaround merely to make the
+cleanup summary look complete.
+
 ## Capability fallback
 
 If the platform cannot create dedicated worktrees, keep mutating work serial in an exclusive checkout. Parallel read-only analysis may continue when it cannot modify repository or shared-resource state.

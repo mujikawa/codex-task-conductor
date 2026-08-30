@@ -85,7 +85,10 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 
 - Title every coordinator, worker, reviewer, and follow-up task or agent as `[project/module] | [bounded outcome] | [role]`.
 - Use exactly one independently verifiable outcome in the middle segment. Keep status, dates, sequence-only labels, and task IDs out of titles.
-- Pass the title through the worker-creation operation. Rename immediately when creation-time titles are unavailable.
+- Pass the title through the worker-creation operation when supported. If a
+  subagent surface exposes only a constrained canonical routing name, record the
+  human-readable title in the dispatch packet and durable tracker; do not confuse
+  the routing path with the title or promise an unsupported rename.
 - Record `default/inherited`, or the explicitly selected model, reasoning effort, and rationale.
 - Omit model and reasoning overrides by default. Set a model only when the user explicitly requests that model.
 - Pass requested overrides through task-creation fields, not prompt prose alone, and verify destination support before dispatch.
@@ -146,7 +149,13 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 
 - Prefer cursor-based bounded waits or snapshots. Do not repeatedly reread full task histories.
 - For concurrent workers, wait on all active routing IDs in one bounded snapshot when supported.
+- Match wait cadence to the observed phase. Back off while a long test, build, or
+  CI job is making no material state transition; shorten the wait only near an
+  expected boundary or after new evidence. Reset the cadence on a meaningful
+  state change. Do not turn a fixed one-minute poll into the default heartbeat.
 - Notify the user only for meaningful state changes, decisions, failed acceptance, or completion.
+- Do not narrate unchanged waits. Count bounded waits and unchanged polls when
+  measurement data is available.
 - Keep unaffected workers running when an unrelated worker fails. Stop the batch when shared contract, base, resource, or authorization state drifts.
 - Use a follow-up only when outcome and Definition of Done remain unchanged. Track material scope changes as new outcomes.
 
@@ -173,6 +182,13 @@ gate once after combined outcomes. Repeat a broad gate in both worker and
 coordinator only when repository policy, a relevant intervening change, or the
 declared risk requires it, and record that reason.
 
+Choose the immutable-candidate broad-gate owner before integration begins. If the
+integration worker owns the gate, coordinator acceptance verifies the immutable
+target, evidence, and decision-critical semantics without automatically repeating
+the same broad commands. If the coordinator owns the gate, the integration worker
+stops after focused checks and the immutable candidate. Do not assign both actors
+the same broad gate merely to add independence.
+
 Independently verify:
 
 - expected repository, branch, worktree, and final HEAD
@@ -182,6 +198,11 @@ Independently verify:
 - unresolved review, conflict, security, deployment, or owner-only boundaries
 
 Mark an outcome accepted only when evidence is sufficient. Worker confidence is not evidence.
+
+When risk warrants a read-only reviewer, include semantic probes that broad suites
+commonly miss: boundary-value behavior, least-privilege route reachability,
+reversible or recoverable state transitions, and adjacent negative controls. Tailor
+these probes to the outcome; they are not a universal checklist.
 
 For a release that combines several outcomes and crosses into migration or live
 deployment, prefer one final read-only integrated reviewer after the immutable
@@ -208,5 +229,18 @@ and token counters before the first publication, migration, deployment, or live
 operation. A same-turn continuation does not remove this boundary. Prefer a
 coordinator rollover at this point when compaction has occurred or the remaining
 Ops work is material.
+
+Keep publication reconciliation finite. Prefer at most one tracker-only
+post-merge reconciliation PR for one delivery lifecycle unless repository policy
+or explicit user direction requires more. A reconciliation PR cannot record its
+own future merge identifier; record that terminal identifier in the PR body,
+comment, release receipt, or other authorized durable lifecycle record instead of
+opening a recursive finalization PR solely to describe the previous one.
+
+Report delivery, publication, reconciliation, and cleanup as separate lifecycle
+facets. An accepted and merged delivery may still be
+`cleanup-pending-host-release` when a live task or Windows handle prevents safe
+branch or directory removal. Record the exact residual refs or paths and one safe
+next action; do not claim full lifecycle cleanup or force deletion.
 
 Record token and elapsed-time telemetry when available, but do not invent missing values or claim causation from one observation.

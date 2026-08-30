@@ -124,6 +124,15 @@ Declare one owner for each validation layer before dispatch:
   once after focused checks pass;
 - the coordinator runs the integration gate once after outcomes are combined.
 
+When an integration worker creates the immutable combined candidate, choose one
+of two contracts before dispatch:
+
+- `worker-owned broad gate`: the worker runs focused checks and the frozen broad
+  gate; coordinator acceptance verifies ancestry, manifest, evidence, and
+  decision-critical semantics without repeating the same broad commands;
+- `coordinator-owned broad gate`: the worker runs focused checks and stops at a
+  clean immutable candidate; the coordinator runs the frozen broad gate once.
+
 Do not automatically run the same broad gate in both a mutable worker worktree and
 again in coordinator acceptance. A second broad run requires a relevant code or
 environment change, an inconclusive infrastructure failure, repository policy, or
@@ -174,6 +183,10 @@ Record the final decision and evidence in durable state, not by preserving chat.
   Run each required broad gate once under its declared owner after focused checks
   pass, and rerun it only after a relevant change, an inconclusive infrastructure
   failure, or a repository-mandated second boundary.
+- **Monitoring:** Prefer event or cursor waits. For long tests, builds, and CI,
+  increase the wait interval while state is unchanged and reset it after a
+  meaningful transition. Do not emit commentary for unchanged polls. Retain the
+  poll count and reason for unusually dense monitoring when telemetry is kept.
 - **Diffs:** Start with base/HEAD, status, changed-file names, and diff statistics.
   Load targeted hunks for contract, risk, or failure analysis. Load the full diff
   only when scope is small or the acceptance decision requires cross-file review.
@@ -244,7 +257,14 @@ After delivery acceptance, classify the next action before continuing:
   separately. Do not widen a narrower action list announced in the current turn by
   later relying on standing policy; restate or request authorization first.
 - If no Ops task is authorized, stop after recording the owner action and evidence.
-
+- Keep tracker reconciliation finite. Prefer one post-merge tracker PR per
+  delivery lifecycle. Record that PR's own merge identifier in its body, a
+  comment, release receipt, or another authorized lifecycle record rather than
+  opening another tracker PR solely to record the prior tracker PR.
+- Track delivery acceptance, publication, reconciliation, and cleanup separately.
+  A host-held worktree handle or residual preserved ref leaves cleanup pending; it
+  does not reopen an accepted product outcome and must not be hidden by a generic
+  `complete` status.
 When delivery and Ops remain in one user turn, preserve the cutoff anyway. Prefer
 a context rollover before material deployment or migration when compaction has
 occurred, the coordinator is reconstructing state, or the Ops packet is no longer

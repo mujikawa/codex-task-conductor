@@ -20,9 +20,9 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.4-preview` release. The generic skill, adoption guidance,
-MIT license, release checklist, two serial observational case studies, and five
-field observations plus one autonomous-release observation are present.
+This repository is the `v0.1.5-preview` release. The generic skill, adoption
+guidance, MIT license, release checklist, two serial observational case studies,
+and seven field observations are present.
 
 The workflow has been exercised with serial independent tasks, a clean-room
 coordinator-owned subagent, and a controlled two-worker concurrent pilot with an
@@ -59,12 +59,14 @@ docs/
 ├── field-observation-cost-aware-agy.md
 ├── field-observation-subagent-parallel-agy.md
 ├── field-observation-serial-gate-escape.md
+├── field-observation-subagent-delivery-lifecycle.md
 ├── field-observation-zero-dispatch.md
 ├── release-v0.1.0-preview.md
 ├── release-v0.1.1-preview.md
 ├── release-v0.1.2-preview.md
 ├── release-v0.1.3-preview.md
 ├── release-v0.1.4-preview.md
+├── release-v0.1.5-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -98,7 +100,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.4-preview.
+mujikawa/codex-task-conductor at ref v0.1.5-preview.
 ```
 
 Restart or reload Codex after installation, then open a fresh task and ask:
@@ -210,9 +212,17 @@ records nine serial coordinator-owned outcomes, selective AGY execution, GitHub
 lifecycle, and rollback-protected production deployment. It motivates verified
 authorization anchors, reconciled manifests, and a frozen Delivery-to-Ops cutoff.
 
+The [subagent delivery-lifecycle field observation](docs/field-observation-subagent-delivery-lifecycle.md)
+records a seven-subagent vertical-slice delivery with a serial foundation pilot,
+controlled two-worker concurrency, independent semantic review, bounded
+correction, GitHub lifecycle, and host-held cleanup residue. It motivates one
+broad-gate owner, adaptive monitoring, finite reconciliation, and separate
+lifecycle facets.
+
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
-See the [v0.1.4-preview release notes](docs/release-v0.1.4-preview.md) for the
-latest authorization-anchor, manifest, and Delivery-to-Ops guidance. The
+See the [v0.1.5-preview release notes](docs/release-v0.1.5-preview.md) for the
+latest broad-gate ownership, monitoring, reconciliation, and cleanup guidance.
+The [v0.1.4-preview notes](docs/release-v0.1.4-preview.md),
 [v0.1.3-preview notes](docs/release-v0.1.3-preview.md),
 [v0.1.2-preview notes](docs/release-v0.1.2-preview.md),
 [v0.1.1-preview notes](docs/release-v0.1.1-preview.md) and

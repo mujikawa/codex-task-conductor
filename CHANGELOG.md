@@ -2,6 +2,27 @@
 
 All notable changes to Task Conductor will be documented in this file.
 
+## 0.1.5-preview - 2026-08-31
+
+### Added
+
+- An anonymized field observation of a seven-subagent vertical-slice delivery
+  through independent review, bounded correction, GitHub lifecycle, and partial
+  host cleanup, with a frozen ten-root telemetry boundary.
+
+### Changed
+
+- Integration now chooses one immutable-candidate broad-gate owner before
+  dispatch instead of duplicating the same gate in worker and coordinator.
+- Monitoring backs off during unchanged long-running tests and CI and records
+  dense polling when telemetry is available.
+- Review packets call out outcome-specific boundary, least-privilege,
+  recoverability, and adjacent negative-control probes.
+- Publication prefers one post-merge tracker reconciliation and records the
+  reconciliation PR's own terminal identifier outside a recursive tracker PR.
+- Delivery, publication, reconciliation, and cleanup are separate lifecycle
+  facets, including `cleanup-pending-host-release` for safely preserved residue.
+
 ## 0.1.4-preview - 2026-08-30
 
 ### Added
