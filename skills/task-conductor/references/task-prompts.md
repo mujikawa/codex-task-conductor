@@ -31,7 +31,7 @@ Use $task-conductor to coordinate [initiative].
 Durable tracker: [tracker]
 Target outcome: [initiative outcome]
 Authorized topology: [coordinator-owned subagent | independent user-owned task]
-Authorized concurrency: [one worker | exact concurrency]
+Authorized concurrency limit: [existing authorization and maximum workers]
 Implementation executor: [Codex direct | AGY via $delegate-to-agy]
 Language: [requested language or inherit]
 Constraints: [authorization and repository rules]
@@ -51,7 +51,7 @@ In scope: [items]
 Out of scope: [items]
 Definition of Done: [criteria]
 Required validation: [commands and evidence]
-Branch/worktree: Use the dedicated task branch and worktree from [pinned base].
+Target: [repository and pinned base; dedicated branch/worktree for mutating work]
 Runtime ownership: [environment, cache, port, database, generated-output paths and permitted lifecycle actions]
 Authorization boundaries: [boundaries]
 Authorization anchor: [trusted user turn or standing-policy boundary]
@@ -64,9 +64,9 @@ Read current durable state and repository instructions before editing. Do not cr
 Build this prompt from the compact dispatch packet in `context-loading.md`. Add:
 
 ```text
-Model/tool cycle budget: [phase budgets or observable-loop proxy]
-Correction envelope: [exact mutable scope, allowed correction loops, focused checks, broad-gate allowance]
-Stop conditions: [budget boundary, failed gate, authorization boundary]
+Explicit hard limits: [user/repository limits; omit if none]
+Correction scope: [already authorized files/components, focused checks, broad-gate owner]
+Stop conditions: [completion, no useful authorized next action, missing required input, authority or explicit hard-limit boundary]
 Evidence locations: [exact durable references; do not embed raw history]
 Validation ownership: [worker semantic/focused checks | immutable-candidate broad gate owner | integration gate owner]
 Frozen candidate gate: [exact repository-wide commands required before review and acceptance]
@@ -122,7 +122,7 @@ decision-critical semantic risks that the broad suite may not cover.
 Use $task-conductor for a controlled parallel pilot.
 
 Durable trackers: [trackers]
-Authorized concurrency: Exactly [2] mutating workers; no nested tasks.
+Authorized concurrency: Up to [2] mutating workers under [authorization]; no nested tasks.
 Outcome A: [scope, DoD, branch/worktree, resources, execution profile]
 Outcome B: [scope, DoD, branch/worktree, resources, execution profile]
 Pinned base and frozen contract: [refs]
@@ -158,8 +158,8 @@ Environment and rollback boundary: [facts]
 Rehearsal evidence: [same-platform syntax, fixture, topology, or dry-run evidence required before live mutation]
 Required checks and evidence: [checks and stable locations]
 Delivery cutoff: [accepted manifest, immutable target, timestamp, and frozen telemetry]
-Model/tool cycle budget: [budget or observable-loop proxy]
-Stop conditions: [failed preflight, drift, budget, or authorization boundary]
+Explicit hard limits: [user/repository limits; omit if none]
+Stop conditions: [completion, failed preflight, material drift, no progress, authority or explicit hard-limit boundary]
 Language: [requested language or inherit]
 
 Do not change accepted delivery scope. Return the completion contract and keep this

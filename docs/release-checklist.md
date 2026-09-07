@@ -2,6 +2,18 @@
 
 Use this checklist for a preview or stable Task Conductor release. Record failures as release blockers; do not turn an unverified capability into a claim.
 
+## v0.1.6-preview instruction validation (2026-09-07)
+
+The official skill validator, local Markdown link resolution, and diff whitespace
+checks pass. Static scenario review covers continuing useful work without a
+default cycle budget, respecting explicit hard limits across follow-ups, changing
+approach on repeated no-progress failures, reusing scoped dispatch authorization,
+read-only isolation, and continuing after same-task compaction. The AGY contract
+preserves external retry caps and distinguishes eligible Codex handoffs from
+AGY-only requests and host denials. This is static review, not a new live pilot.
+The operational evidence and remaining preview blockers below are historical and
+are not marked newly passed by this release.
+
 ## Repository hygiene
 
 - [x] `README.md`, `CHANGELOG.md`, `LICENSE`, adoption guidance, and the case study agree on the release status.

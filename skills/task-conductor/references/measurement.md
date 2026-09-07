@@ -96,7 +96,7 @@ the retained sum as the workflow total.
 
 Do not claim control over prompt caching, `reasoning.context`, or compaction
 thresholds. Measure observed behavior and the workflow controls that are actually
-available: packet contents, references loaded, reruns, and bounded cycles.
+available: packet contents, references loaded, reruns, and progress-based execution.
 
 ## Pilot 3 observational validation
 
@@ -107,7 +107,8 @@ cutoff before any separately authorized Ops work and record:
 - compact dispatch and acceptance packet presence, field completeness, and size
   using one declared unit such as lines, words, or tokens
 - context budget gate and review readiness gate pass/fail decisions
-- declared versus observed model/tool cycles, or labeled action-loop proxies
+- observed model/tool cycles or labeled action-loop proxies; compare with a hard
+  limit only when one was explicitly supplied
 - repeated full-history reads, full-Issue loads, full-diff loads, broad test reruns,
   and full-artifact loads, with a reason for every exception
 - coordinator, worker, reviewer, automatic-review, and Ops topology separately

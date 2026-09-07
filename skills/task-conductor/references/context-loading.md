@@ -9,7 +9,7 @@ directly control prompt caching, `reasoning.context`, or compaction thresholds.
 - Context budget gate
 - Compact dispatch packet
 - Trust-preserving inheritance
-- Model/tool cycle budget
+- Progress and stopping conditions
 - Layered validation ownership
 - Review readiness gate
 - Compact acceptance packet
@@ -52,7 +52,7 @@ Send one packet per bounded outcome:
   policy boundary it must preserve
 - implementation executor; for AGY, include the allowed paths, AGY cycle budget,
   and location of the private conversation-routing record
-- model/tool cycle budget and stop conditions
+- completion and no-progress conditions; explicit hard limits only when supplied
 - one next action
 
 Do not attach full coordinator history, entire Issue discussions, unrelated diffs,
@@ -82,37 +82,38 @@ content classes the authorization permits disclosing. Do not copy the same
 history into the packet. Full-history inheritance is a measurable context-cost
 decision, not a substitute for a complete scope packet.
 
-## Model/tool cycle budget
+## Progress and stopping conditions
 
-- Declare a task-specific budget before dispatch for inspection, implementation,
-  focused verification, and at most the authorized correction loops.
-- Use reported model/tool cycles when available. Otherwise use observable action
-  loops—inspect, change, verify, reassess—as an explicitly labeled proxy.
-- Start with the smallest budget credible for the outcome. Increase it only from
-  new evidence, not because a task is repeatedly rereading unchanged state.
-- At the budget boundary, stop the loop and return current evidence, remaining gap,
-  and one next action. Do not silently raise effort, add workers, or rerun broad
-  checks.
-- Reset the budget only for a newly scoped outcome or explicitly authorized
-  follow-up. Preserve the original Definition of Done for a same-scope follow-up.
-- Count product correction loops, infrastructure recovery attempts, review cycles,
-  publication cycles, and full-gate reruns separately. A recovery may be exempt
-  from the product-change budget, but never from telemetry or stop conditions.
+Do not assign fixed model/tool-cycle or correction-count budgets to Codex workers
+or reviewers. Use the Definition of Done, current evidence, and authorization:
 
-### Correction envelope
+- Finish when the outcome and required checks pass. Do not add unrelated checks.
+- Continue within scope while inspection, implementation, or verification produces
+  new evidence or measurable progress. A failed test is a correction input, not an
+  automatic reason to return the task to the user.
+- If the same failure recurs without new evidence, change the approach, narrow the
+  problem, or investigate the cause. Do not repeat unchanged actions. Report a
+  blocker when no useful authorized next action remains.
+- Stop dependent work at a missing required input, authorization boundary, or an
+  explicit user or repository hard limit. Preserve unaffected authorized work.
+- Record time, cost, token, or attempt limits only when supplied. Never invent a
+  default limit, silently exceed one, or reset it by creating a follow-up worker.
+- External executors retain their own failure/retry policies. In particular,
+  `$delegate-to-agy` owns AGY retry and remediation caps; removing Codex cycle
+  budgets does not remove those limits.
 
-Prefer one explicit correction envelope over repeated micro-authorization when the
-user and repository policy permit it. Record:
+Observed action loops may be recorded as telemetry. They are not a dispatch field
+or stopping threshold unless the user or repository explicitly makes them one.
 
-- exact files, components, and behavior that may change
-- the maximum evidence-driven correction loops
-- focused checks after each correction
-- the one allowed broad-gate run after focused checks pass
-- conditions that immediately end the envelope
+### Correction scope
 
-The envelope ends on material scope drift, a new external side effect, credential
-or permission work, deployment risk, destructive cleanup, or exhausted loops. It
-does not convert a bounded outcome into open-ended authority.
+Use the existing authorization to identify mutable files, components, behavior,
+required focused checks, and the owner of the broad gate. Evidence-driven fixes
+inside that scope do not require fresh per-loop permission. Rerun affected checks
+after a relevant change or inconclusive result, retaining the validation ownership
+rules below. New external side effects, credential or permission work, deployment,
+destructive cleanup, and material scope changes require applicable authorization;
+the correction scope does not grant it.
 
 ## Layered validation ownership
 
@@ -208,9 +209,13 @@ Treat context rollover as a coordinator lifecycle transition, not as worker
 redispatch. Do not rely on a fixed token threshold unless the active product
 surface explicitly exposes and guarantees one.
 
-Prepare a rollover checkpoint when compaction is observed or expected, the
-coordinator repeatedly reconstructs the same state, the initiative crosses a
-major lifecycle boundary, or Codex surfaces a continuation or replacement task:
+For compaction within the same task, update or read the compact checkpoint,
+reconcile active work, and continue without suspending new authorized dispatches.
+Repeated state reconstruction calls for a clearer checkpoint, not automatically
+a replacement task. A UI continuation alone is not evidence of changed ownership.
+
+Use the following transfer procedure only when a successor will actually take
+ownership or an authorized material lifecycle transition requires a handoff:
 
 1. Stop new dispatches and freeze the current dashboard.
 2. Write active outcome state, topology, agent paths or task IDs, branch/worktree
@@ -252,7 +257,7 @@ After delivery acceptance, classify the next action before continuing:
 - Do not dispatch the Ops outcome without explicit authorization. Choose a
   coordinator-owned subagent for bounded automation or an independent task when
   user-owned lifecycle is material. Give it a new compact dispatch packet,
-  execution budget, durable state, and measurement boundary.
+  applicable explicit hard limits, durable state, and measurement boundary.
 - Enumerate push, PR creation, merge, reconciliation, deployment, and cleanup
   separately. Do not widen a narrower action list announced in the current turn by
   later relying on standing policy; restate or request authorization first.

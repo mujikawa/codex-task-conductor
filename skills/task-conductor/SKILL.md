@@ -34,7 +34,7 @@ Read [`references/delegate-to-agy.md`](references/delegate-to-agy.md) only when 
 
 - Confirm the initiative has a repository-declared durable tracker or another explicitly authorized durable handoff location.
 - If neither exists, report the governance gap. Do not invent a tracker or silently make chat the durable record.
-- Confirm the user explicitly authorizes the requested worker topology and concurrency. This skill does not supply authorization to spawn subagents or create independent tasks.
+- Verify existing user authorization for the worker topology and concurrency limit. Reuse it for subsequent dispatches within the same authorized scope; do not ask again per batch. A prior pilot or tracker alone is not authorization. Ask only when authorization is missing or the proposed scope, topology, or concurrency exceeds it. This skill does not itself authorize worker creation.
 - Select and record one topology before dispatch:
   - `coordinator-owned subagent` is preferred for bounded automated execution and review within the current delivery lifecycle
   - `independent user-owned task` is reserved for direct user follow-up, a separate authorization or risk boundary, long-lived ownership, a distinct host or repository, or explicit user preference
@@ -112,9 +112,9 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 
 - Keep one mutating worker as the default.
 - Limit the first parallel pilot to two mutating workers.
-- Require explicit current authorization for the exact concurrency and every check in `references/parallel-readiness.md` to pass.
+- Stay within the already authorized concurrency limit and apply the relevant checks in `references/parallel-readiness.md`. Mutation and integration checks apply only to workers that change shared state.
 - Stop parallel dispatch when dependency, contract, file/object, resource, or authorization overlap appears.
-- Accept workers individually, then run the declared integration acceptance gate.
+- Accept workers individually, then run the declared integration acceptance gate when combining changes.
 
 ## 6. Dispatch bounded workers
 
@@ -126,12 +126,12 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
   packet. Before dispatch, verify that the selected slice actually contains the
   authorization-bearing user turn; a fixed turn count is not evidence by itself.
   Treat a full-history fork as an evidenced exception, not the default.
-- Declare a model/tool cycle budget and stop condition for every worker and reviewer. A budget limits loops; it does not override required verification.
-- When explicitly authorized, declare a correction envelope with exact mutable
-  files or components, permitted evidence-driven correction loops, and the single
-  broad-gate allowance. Corrections inside that envelope do not need artificial
-  per-line follow-up outcomes. Scope, risk-boundary, credential, deployment, and
-  destructive changes still require new authorization.
+- Use completion, progress, and authorization boundaries from `references/context-loading.md` to govern workers and reviewers. Do not invent fixed model/tool-cycle or correction-count budgets. Preserve any explicit user or repository hard limit and any external-executor retry policy.
+- Keep evidence-driven corrections within the already authorized files, components,
+  and behavior. Record focused checks and the broad-gate owner; do not require a
+  correction-count allowance or per-line follow-up authorization. A relevant change
+  or failed check can justify repeating affected required checks. New scope or
+  authority still requires authorization.
 - On every dispatch, record requested topology, creation operation, returned agent path or task ID, parent lineage when available, and observed topology. Do not infer topology from sidebar placement or a generic `thread_source` label alone.
 - For a subagent, retain its agent ID or path as transient routing data and use the parent workflow's bounded wait, message, follow-up, and interruption controls.
 - For an independent task, treat a client-side or pending creation handle as evidence that the request was accepted, not that setup is still running or complete. Do not submit the request again. Record `creation accepted / formal ID unresolved / execution unknown` until the formal task ID is correlated.
@@ -214,7 +214,7 @@ actor.
 
 Stop when the initiative is complete, a dependency requires user authority, or remaining work cannot be safely split. Write accepted and blocked outcomes, evidence, execution profiles, decisions, topology, and one next action to the durable tracker. Do not create a competing coordinator backlog.
 
-When the coordinator approaches compaction, becomes difficult to audit, or Codex surfaces a continuation or replacement task, apply the context-rollover protocol in `references/context-loading.md`. Do not depend on an undocumented numeric context threshold. A sidebar thread may be a surfaced subagent rather than an independent task; verify creation and lineage before assigning ownership. The successor coordinator must adopt durable state and active worker IDs without redispatching existing work.
+After same-task compaction, refresh the compact durable checkpoint and continue. Use the context-rollover protocol in `references/context-loading.md` only when ownership actually transfers or a material lifecycle transition requires it. Do not depend on an undocumented numeric context threshold. A sidebar thread may be a surfaced subagent rather than an independent task; verify creation and lineage before assigning ownership. The successor coordinator must adopt durable state and active worker IDs without redispatching existing work.
 
 Before publication, enumerate the exact authorized side effects: push, pull-request
 creation, merge, reconciliation, deployment, and cleanup. A standing policy may

@@ -2,6 +2,18 @@
 
 All notable changes to Task Conductor will be documented in this file.
 
+## 0.1.6-preview - 2026-09-07
+
+### Changed
+
+- Replace default Codex cycle budgets with completion, progress, and authorization
+  conditions; preserve explicit hard limits and external-executor retry policies.
+- Reuse scoped dispatch authorization and apply mutation-only gates only to work
+  that changes state.
+- Continue after same-task compaction without an artificial ownership transfer.
+- Centralize AGY executor policy in delegate-to-agy and simplify its integration
+  reference to worker dispatch, handoff, and evidence acceptance.
+
 ## 0.1.5-preview - 2026-08-31
 
 ### Added
