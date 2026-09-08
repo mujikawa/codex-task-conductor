@@ -35,8 +35,19 @@ Keep the durable record layered when possible:
 - decision log for contract-changing choices
 - evidence index pointing to full logs and artifacts
 
-Do not copy every commentary update, command transcript, or authorization exchange
-into the stable specification. Preserve only decision-relevant history.
+Update the current-state row at material transitions: dispatch, blocker or
+decision change, immutable candidate, acceptance, and publication. Routine test
+progress or an unchanged poll does not require a tracker write.
+
+Keep the Issue body focused on stable scope, Definition of Done, the compact
+current-state row, and evidence links. Put meaningful progress in concise
+incremental comments; do not append a growing execution transcript to the body
+and resubmit it on each update. Update a parent only when its dependency or
+overall state changes, linking child evidence instead of duplicating it.
+
+Preserve decision-relevant history and authorization anchors. Rewrite stable
+specification only for an actual contract change, with its rationale recorded.
+Do not impose an arbitrary character or update-count cap that drops needed evidence.
 
 For delivered outcomes, record lifecycle facets separately:
 

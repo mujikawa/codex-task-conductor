@@ -226,9 +226,10 @@ After delivery acceptance, apply the delivery-to-Ops boundary in `references/con
 
 Freeze and record the delivery manifest, accepted target, elapsed-time cutoff,
 and token counters before the first publication, migration, deployment, or live
-operation. A same-turn continuation does not remove this boundary. Prefer a
-coordinator rollover at this point when compaction has occurred or the remaining
-Ops work is material.
+operation. A same-turn continuation does not remove this boundary. Use a coordinator handoff only when an authorized change in ownership or
+lifecycle requires it. Compaction or a context-window change alone is not a
+reason to replace the coordinator; continue bounded authorized Ops in the same
+task while preserving the measurement cutoff.
 
 Keep publication reconciliation finite. Prefer at most one tracker-only
 post-merge reconciliation PR for one delivery lifecycle unless repository policy

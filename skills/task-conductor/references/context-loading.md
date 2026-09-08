@@ -211,8 +211,10 @@ surface explicitly exposes and guarantees one.
 
 For compaction within the same task, update or read the compact checkpoint,
 reconcile active work, and continue without suspending new authorized dispatches.
-Repeated state reconstruction calls for a clearer checkpoint, not automatically
-a replacement task. A UI continuation alone is not evidence of changed ownership.
+When supported, retrieve only the missing decision or evidence from task history;
+do not assume shared history across workers or an undocumented notes location.
+Revalidate mutable Git, PR, and worker state before acting. Repeated state
+reconstruction calls for a clearer checkpoint, not automatically a replacement task. A UI continuation alone is not evidence of changed ownership.
 
 Use the following transfer procedure only when a successor will actually take
 ownership or an authorized material lifecycle transition requires a handoff:
@@ -270,10 +272,11 @@ After delivery acceptance, classify the next action before continuing:
   A host-held worktree handle or residual preserved ref leaves cleanup pending; it
   does not reopen an accepted product outcome and must not be hidden by a generic
   `complete` status.
-When delivery and Ops remain in one user turn, preserve the cutoff anyway. Prefer
-a context rollover before material deployment or migration when compaction has
-occurred, the coordinator is reconstructing state, or the Ops packet is no longer
-compact.
+When delivery and Ops remain in one user turn, preserve the cutoff anyway. Use an ownership handoff only when the authorized lifecycle actually requires
+one. Recover missing state from available task history and authoritative records
+before deciding a handoff is needed. Compaction, a context-window change, or a
+large packet alone does not require a replacement task; trim the packet and
+continue the existing authorized outcome.
 
 
 Start a new outcome when an Ops phase adds a new product or infrastructure change,

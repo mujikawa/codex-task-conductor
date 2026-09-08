@@ -2,6 +2,16 @@
 
 All notable changes to Task Conductor will be documented in this file.
 
+## 0.1.7-preview - 2026-09-08
+
+### Changed
+
+- Update trackers at material transitions with compact current state and linked
+  evidence; keep incremental progress out of growing Issue bodies.
+- Remove compaction alone as a reason to prefer a replacement coordinator.
+- Recover missing decisions with available task history while preserving durable
+  ownership, authorization, verification gates, and measurement boundaries.
+
 ## 0.1.6-preview - 2026-09-07
 
 ### Changed

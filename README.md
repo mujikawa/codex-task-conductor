@@ -20,7 +20,7 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.6-preview` release. The generic skill, adoption
+This repository is the `v0.1.7-preview` release. The generic skill, adoption
 guidance, MIT license, release checklist, two serial observational case studies,
 and seven field observations are present.
 
@@ -67,7 +67,7 @@ docs/
 ├── release-v0.1.3-preview.md
 ├── release-v0.1.4-preview.md
 ├── release-v0.1.5-preview.md
-├── release-v0.1.6-preview.md
+├── release-v0.1.7-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -102,7 +102,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.6-preview.
+mujikawa/codex-task-conductor at ref v0.1.7-preview.
 ```
 
 Restart or reload Codex after installation, then open a fresh task and ask:
