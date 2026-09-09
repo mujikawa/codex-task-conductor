@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.1.8-preview — 2026-09-09
+
+- Add an optional versioned JSON worker receipt and standard-library Python
+  validator for missing evidence and internally inconsistent candidate claims.
+- Clarify target-bound evidence reuse and failure-specific recovery, without
+  automatic replay, added retry caps, or changes to acceptance authority.
+- Add offline receipt contract and CLI regression tests. Design inspiration:
+  [Open Dynamic Workflow](https://github.com/travisliu/open-dynamic-workflow/tree/0d008c6207655fd0f31bf54ee1e8b1ae6413dd4c).
+  This is an independent implementation; no runtime dependency is introduced.
+
 All notable changes to Task Conductor will be documented in this file.
 
 ## 0.1.7-preview - 2026-09-08

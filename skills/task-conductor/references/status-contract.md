@@ -64,6 +64,10 @@ safe next action without changing an accepted delivery back to `needs_followup`.
 
 ## Worker completion contract
 
+For repeated dispatches or automated collection, optionally use the
+[structured receipt and validator](structured-receipt.md). It encodes this
+contract without replacing coordinator acceptance or the canonical tracker.
+
 Return:
 
 1. outcome and durable tracker

@@ -20,7 +20,7 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.7-preview` release. The generic skill, adoption
+This repository is the `v0.1.8-preview` release. The generic skill, adoption
 guidance, MIT license, release checklist, two serial observational case studies,
 and seven field observations are present.
 
@@ -39,6 +39,7 @@ retry, so it validates the bounded workflow rather than reliability or efficienc
 skills/task-conductor/
 ├── SKILL.md
 ├── agents/openai.yaml
+├── scripts/validate_receipt.py
 ├── assets/
 │   └── task-governance-template.md
 └── references/
@@ -48,6 +49,7 @@ skills/task-conductor/
     ├── measurement.md
     ├── parallel-readiness.md
     ├── status-contract.md
+    ├── structured-receipt.md
     ├── task-prompts.md
     └── troubleshooting.md
 
@@ -67,7 +69,7 @@ docs/
 ├── release-v0.1.3-preview.md
 ├── release-v0.1.4-preview.md
 ├── release-v0.1.5-preview.md
-├── release-v0.1.7-preview.md
+├── release-v0.1.8-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -102,7 +104,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.7-preview.
+mujikawa/codex-task-conductor at ref v0.1.8-preview.
 ```
 
 Restart or reload Codex after installation, then open a fresh task and ask:
@@ -115,6 +117,14 @@ independent tasks, and do not dispatch anything.
 If the skill is not recognized, verify that the installed directory contains `SKILL.md` at its root and that its frontmatter name is `task-conductor`.
 
 Invoke the installed skill as `$task-conductor`. Repository instructions remain authoritative for branch lifecycle, verification commands, durable trackers, language, and owner-only actions.
+
+## Optional structured receipt
+
+For repeated dispatches, the optional
+[structured worker receipt](skills/task-conductor/references/structured-receipt.md)
+provides a Python standard-library validator. It checks record consistency, not
+actual Git state, test execution, or acceptance. Run its offline regression tests
+with `python -m unittest discover -s tests -v` from this repository.
 
 ## Optional AGY executor
 
