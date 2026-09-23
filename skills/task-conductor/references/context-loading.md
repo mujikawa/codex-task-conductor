@@ -50,8 +50,9 @@ Send one packet per bounded outcome:
 - authorization boundaries and declared execution profile
 - inherited-context selection, authorization anchor, and the trusted user turn or
   policy boundary it must preserve
-- implementation executor; for AGY, include the allowed paths, AGY cycle budget,
-  and location of the private conversation-routing record
+- implementation executor; for Luna, include the child profile, authorization,
+  routing and exclusive write handoff from `luna-executor.md`; for AGY, include
+  the allowed paths, AGY cycle budget, and private conversation-routing location
 - completion and no-progress conditions; explicit hard limits only when supplied
 - one next action
 

@@ -34,6 +34,7 @@ Keep stable scope in the canonical record:
 - Definition of Done
 - required verification and acceptance evidence
 - implementation executor and private routing-record location when an external agent is used
+- selected model/effort and setting sources for the worker, reviewer and optional executor
 - branch, worktree, and mutable-resource ownership
 - environment, cache, port, database, generated-output ownership, and permitted
   create, reuse, rebuild, normalize, and cleanup actions

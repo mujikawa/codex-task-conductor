@@ -23,7 +23,7 @@ Version 1 fields:
 | `state` | `candidate` or `incomplete`; never worker-declared `accepted` |
 | `outcome`, `tracker` | Bounded outcome and canonical durable record |
 | `worker`, `topology`, `routing_id` | Title, observed topology, transient routing identifier |
-| `executor`, `execution_profile` | Executor and selected settings or `default/inherited` |
+| `executor`, `execution_profile` | Executor and selected model/effort with setting sources; actual settings when observable, otherwise `unavailable`; `default/inherited` when explicitly selected |
 | `repository`, `branch`, `worktree`, `base`, `target` | Repository identity and immutable target; use `none` or `unavailable` where genuinely inapplicable |
 | `rationale`, `next_action` | Change rationale and one next action |
 | `changed_files`, `risks`, `blockers`, `owner_actions` | Arrays of nonempty strings; empty arrays explicitly mean none |

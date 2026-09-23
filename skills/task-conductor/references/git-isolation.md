@@ -20,6 +20,11 @@ Read-only reviewers may use a pinned snapshot without creating a branch. A dedic
 - Report the final HEAD, changed files, exact checks, and worktree status.
 - Do not push, merge, rebase, force-update, or delete branches unless separately authorized.
 
+An explicitly enabled Luna executor may hold the outcome worktree's exclusive
+write ownership while its owning worker is read-only. Record the transfer and
+verified return of ownership under [the Luna contract](luna-executor.md); this
+does not permit two active writers or sharing a worktree across outcomes.
+
 ## Acceptance and integration
 
 Verify repository identity, base ancestry, final HEAD, scoped diff, clean status,

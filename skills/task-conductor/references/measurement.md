@@ -4,7 +4,7 @@ Measure the workflow without turning telemetry into a new source of overhead.
 
 ## Record when available
 
-- model and reasoning effort
+- selected and actual model and reasoning effort, plus the source of each setting
 - input, output, reasoning, and cached tokens as separately reported values
 - wall-clock elapsed time
 - active agent time and tool/test wait time when distinguishable
@@ -19,7 +19,7 @@ Measure the workflow without turning telemetry into a new source of overhead.
 - completed Definition of Done items
 - outcome state as `accepted`, `needs_followup`, `blocked`, or another declared status
 - creation topology for each root: independent task, background subagent, or manual execution
-- implementation executor for each worker: Codex direct or externally delegated
+- implementation executor for each worker: Codex direct, explicitly enabled Luna subagent, or externally delegated AGY
 - outcome-manifest rows and derived worker, commit, PR, accepted, and deployed
   counts, including reconciliation mismatches
 - publication PR count, recursive tracker-finalization cycles, and residual cleanup
@@ -45,6 +45,12 @@ Freeze the measurement boundary before calculating totals:
   transport, password-policy, credential, or cleanup work to the original feature
 
 Classify roots by the operation that created them. A successful independent-task creation and an explicit subagent spawn are different topology evidence. Do not use a generic `thread_source` value alone; it may be an implementation detail shared by both.
+
+Classify a Luna executor as a worker-owned Codex descendant. Report owner,
+executor, reviewer and worker catch-up separately when telemetry permits, and
+include each descendant's usage only once in totals. Profile defaults are a
+quality-oriented starting policy; compare accepted outcomes, rework, escaped
+defects, elapsed time and total cost before claiming an improvement.
 
 Classify AGY as an implementation executor inside its owning Codex worker, not as
 a Codex task root. Record AGY invocations and remediation passes separately when
