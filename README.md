@@ -20,7 +20,7 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.8-preview` release. The generic skill, adoption
+This repository is the `v0.1.9-preview` release. The generic skill, adoption
 guidance, MIT license, release checklist, two serial observational case studies,
 and seven field observations are present.
 
@@ -46,6 +46,7 @@ skills/task-conductor/
     ├── context-loading.md
     ├── delegate-to-agy.md
     ├── git-isolation.md
+    ├── luna-executor.md
     ├── measurement.md
     ├── parallel-readiness.md
     ├── status-contract.md
@@ -70,6 +71,7 @@ docs/
 ├── release-v0.1.4-preview.md
 ├── release-v0.1.5-preview.md
 ├── release-v0.1.8-preview.md
+├── release-v0.1.9-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -104,10 +106,10 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.8-preview.
+mujikawa/codex-task-conductor at ref v0.1.9-preview.
 ```
 
-Restart or reload Codex after installation, then open a fresh task and ask:
+The installed skill will be available on your next turn. To check recognition, ask:
 
 ```text
 List the active task-conductor skill, summarize when it is allowed to create
@@ -126,7 +128,25 @@ provides a Python standard-library validator. It checks record consistency, not
 actual Git state, test execution, or acceptance. Run its offline regression tests
 with `python -m unittest discover -s tests -v` from this repository.
 
-## Optional AGY executor
+## Role defaults and optional executors
+
+Authorized workers default to `gpt-6-sol` / `high`; independent read-only
+reviewers, when needed, default to `gpt-6-sol` / `xhigh`. The coordinator keeps its
+current settings. Explicit user choices override user-adopted project role
+settings, then the [skill defaults](skills/task-conductor/SKILL.md#role-defaults).
+Host/tool selection requirements still apply; unsupported profiles are reported
+instead of silently replaced. These are quality-oriented policies, not measured
+cost or quality improvements.
+
+`Codex direct` remains the default: the worker implements and verifies its outcome.
+Only an explicit request enables a worker-owned Luna executor, defaulting to
+`gpt-6-luna` / `xhigh`. Luna receives a compact implementation packet, holds the
+exclusive write role while it runs, and returns changes for the owning worker to
+review. It cannot delegate further. See the
+[Luna executor contract](skills/task-conductor/references/luna-executor.md).
+Setting profiles does not itself create workers, reviewers or another agent layer.
+
+### Optional AGY executor
 
 Task Conductor can use `$delegate-to-agy` as an optional implementation executor
 without bundling or copying that skill. Install and maintain `$delegate-to-agy`
@@ -232,6 +252,8 @@ broad-gate owner, adaptive monitoring, finite reconciliation, and separate
 lifecycle facets.
 
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
+See the [v0.1.9-preview release notes](docs/release-v0.1.9-preview.md) for role
+profiles and the explicitly enabled Luna executor.
 See the [v0.1.5-preview release notes](docs/release-v0.1.5-preview.md) for the
 latest broad-gate ownership, monitoring, reconciliation, and cleanup guidance.
 The [v0.1.4-preview notes](docs/release-v0.1.4-preview.md),

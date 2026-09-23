@@ -72,8 +72,8 @@ Return:
 
 1. outcome and durable tracker
 2. worker title, topology, and agent path or immutable task ID
-3. implementation executor; for AGY, version, terminal status, private conversation-routing location, and remediation count
-4. model and reasoning effort, or `default/inherited`
+3. implementation executor; for Luna, child routing ID, profile, verified write-ownership return and worker catch-up; for AGY, version, terminal status, private conversation-routing location, and remediation count
+4. selected model and reasoning effort with the source of each setting; actual settings when observable, otherwise `unavailable`; `default/inherited` when explicitly selected
 5. repository, branch, worktree, base, and final HEAD
 6. changed files and rationale
 7. commands and exact pass/fail results

@@ -15,13 +15,18 @@ Replace bracketed fields and remove fields that do not apply. Propagate the user
 ## Worker creation metadata
 
 ```text
-Title: [project/module] | [bounded outcome] | [Coordinator|Worker|Reviewer|Follow-up|Ops]
-Topology: [coordinator-owned subagent | independent user-owned task]
-Implementation executor: [Codex direct | AGY via $delegate-to-agy]
-Execution profile: [default/inherited | model=[user-requested model], reasoning effort=[level], rationale=[why]]
+Title: [project/module] | [bounded outcome] | [Coordinator|Worker|Reviewer|Executor|Follow-up|Ops]
+Topology: [coordinator-owned subagent | independent user-owned task | explicitly authorized worker-owned Luna subagent]
+Implementation executor: [Codex direct (default) | explicitly enabled Luna subagent | explicitly requested AGY via $delegate-to-agy]
+Execution profile: [resolved model and effort from SKILL.md role defaults or overrides; default/inherited only when selected]
+Profile source: [user choice | user-adopted project role setting | skill role default; record per setting]
 ```
 
-Pass title, model, and reasoning effort through creation fields when supported. Omit model and reasoning parameters for configured defaults. Record the returned agent path or task ID.
+Resolve profiles using the role table and precedence in `../SKILL.md`. Pass title,
+model, and reasoning effort through supported creation fields. Omit model and
+effort only when configured defaults/inheritance were selected. Verify host
+selection rules and support before dispatch; record the returned agent path or
+task ID and actual settings when observable. Do not silently fall back.
 
 ## Coordinator
 
@@ -32,7 +37,8 @@ Durable tracker: [tracker]
 Target outcome: [initiative outcome]
 Authorized topology: [coordinator-owned subagent | independent user-owned task]
 Authorized concurrency limit: [existing authorization and maximum workers]
-Implementation executor: [Codex direct | AGY via $delegate-to-agy]
+Implementation executor: [Codex direct (default) | explicitly enabled Luna subagent | explicitly requested AGY via $delegate-to-agy]
+Role profile overrides: [user/project choices; omit when using SKILL.md role defaults]
 Language: [requested language or inherit]
 Constraints: [authorization and repository rules]
 Initial next action: [one action]
@@ -58,7 +64,7 @@ Authorization anchor: [trusted user turn or standing-policy boundary]
 Inherited context: [none | smallest recent slice containing trusted authorization | evidenced full-history exception]
 Language: [requested language or inherit]
 
-Read current durable state and repository instructions before editing. Do not create nested subagents or tasks. Return the worker completion contract.
+Read current durable state and repository instructions before editing. Do not create nested subagents or tasks except the explicitly enabled Luna executor described in the attached packet. Return the worker completion contract.
 ```
 
 Build this prompt from the compact dispatch packet in `context-loading.md`. Add:
@@ -71,6 +77,12 @@ Evidence locations: [exact durable references; do not embed raw history]
 Validation ownership: [worker semantic/focused checks | immutable-candidate broad gate owner | integration gate owner]
 Frozen candidate gate: [exact repository-wide commands required before review and acceptance]
 ```
+
+When the user enables Luna, add the compact executor packet from
+`luna-executor.md`. Explicitly authorize one worker-owned executor layer within
+the existing concurrency limit. The worker independently reviews actual changes
+and owns the completion record; Luna must not create further agents. Do not add
+this layer for ordinary Codex direct work.
 
 When the executor is AGY, add the compact AGY delegation packet from
 `delegate-to-agy.md`. Explicitly instruct the Codex worker to invoke
@@ -108,7 +120,9 @@ Language: [requested language or inherit]
 Do not implement fixes or broaden scope. Return evidence and an accept or needs_followup recommendation.
 ```
 
-Start a reviewer only after the review readiness gate passes. Populate its prompt
+The reviewer profile comes from the role table in `../SKILL.md`; it does not
+require creating a reviewer. Start one only when risk or repository policy
+warrants it and the review readiness gate passes. Populate its prompt
 from the compact acceptance packet; do not attach worker chat, full Issue history,
 or raw logs when stable evidence locations are available.
 

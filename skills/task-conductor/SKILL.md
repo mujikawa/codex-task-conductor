@@ -21,6 +21,7 @@ Before dispatching work, read:
 Read [`references/measurement.md`](references/measurement.md) when evaluating token use, elapsed time, or a pilot.
 Read [`references/troubleshooting.md`](references/troubleshooting.md) when destination resolution, task inventory, ownership checks, creation, or topology verification fails.
 Read [`references/delegate-to-agy.md`](references/delegate-to-agy.md) only when the user explicitly selects AGY as an implementation executor.
+Read [`references/luna-executor.md`](references/luna-executor.md) only when the user explicitly enables a worker-owned Luna executor.
 
 ## Repository adoption
 
@@ -38,7 +39,7 @@ Read [`references/delegate-to-agy.md`](references/delegate-to-agy.md) only when 
 - Select and record one topology before dispatch:
   - `coordinator-owned subagent` is preferred for bounded automated execution and review within the current delivery lifecycle
   - `independent user-owned task` is reserved for direct user follow-up, a separate authorization or risk boundary, long-lived ownership, a distinct host or repository, or explicit user preference
-- Record the implementation executor separately from worker ownership: `Codex direct` by default, or `AGY via $delegate-to-agy` only when the user explicitly requests AGY delegation. Authorization for a Codex worker does not authorize sending code to AGY.
+- Record the implementation executor separately from worker ownership: `Codex direct` by default; `Luna subagent` or `AGY via $delegate-to-agy` only when the user explicitly enables that executor. A model default neither enables another agent layer nor authorizes sending code to AGY.
 - Confirm the selected topology's creation, naming, monitoring, and isolation capabilities before promising orchestration.
 - Resolve a saved-project destination only for an independent task. Bind all workers to the canonical repository path and expected host; if more than one independent-task destination remains plausible, stop for explicit selection.
 - Keep capability, destination-resolution, inventory, ownership, and creation failures separate. One failure is not evidence that another check passed or failed.
@@ -89,11 +90,33 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
   subagent surface exposes only a constrained canonical routing name, record the
   human-readable title in the dispatch packet and durable tracker; do not confuse
   the routing path with the title or promise an unsupported rename.
-- Record `default/inherited`, or the explicitly selected model, reasoning effort, and rationale.
-- Omit model and reasoning overrides by default. Set a model only when the user explicitly requests that model.
-- Pass requested overrides through task-creation fields, not prompt prose alone, and verify destination support before dispatch.
+- Resolve execution profiles using the role defaults below. Record the selected model, reasoning effort, source of each setting, and actual settings when observable; otherwise mark the actual settings `unavailable`.
+- Pass resolved model and effort through creation fields, not prompt prose alone. Verify the destination and tool permit that selection before dispatch; a skill default cannot override a host requirement for explicit user model selection. If unsupported, report the exact limitation and use an already authorized alternative or obtain the missing choice once. Do not silently substitute a model or claim an unapplied profile.
 - Treat higher effort and additional workers as separate token and latency decisions.
 - Treat worker topology and implementation executor as separate decisions. A coordinator-owned Codex subagent may manage an AGY implementation without making AGY a Codex task or subagent.
+
+### Role defaults
+
+| Role | Model | Reasoning effort |
+| --- | --- | --- |
+| Coordinator | Preserve the current task setting | Preserve the current task setting |
+| Worker, including an integration or Ops worker | `gpt-6-sol` | `high` |
+| Independent read-only reviewer, when required | `gpt-6-sol` | `xhigh` |
+| Luna executor, only when explicitly enabled | `gpt-6-luna` | `xhigh` |
+
+For each setting, explicit user choices take precedence over user-adopted project
+role settings, which take precedence over this table. An explicit request to use
+configured defaults or inherit also takes precedence. Check that the resulting
+model/effort pair is supported. Preserve an existing agent's resolved profile on
+same-outcome follow-ups unless an authorized change applies; do not reset it or
+escalate effort automatically. When inheritance is selected, omit overrides and
+record `default/inherited` plus observable effective settings.
+
+These are quality-oriented starting policies, not measured efficiency claims.
+They do not authorize worker creation, enable Luna or AGY, or require a separate
+reviewer. Use a reviewer only when risk or repository policy warrants one.
+The worker profile also applies to the Codex owner of an AGY invocation; AGY's
+own model and effort remain governed by the separately installed executor.
 
 ## 4. Isolate mutating work
 
@@ -138,6 +161,7 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 - For an independent task, resolve the formal task ID with a supported mapping or status capability when available. A missing recent-inventory entry alone does not prove that setup is pending or that execution has not started. Respect inventory bounds and corroborate ownership with Git and durable state.
 - Require the worker to inspect current durable state before editing and to return the worker completion contract.
 - When the executor is AGY, dispatch a Codex worker with an explicit instruction to use `$delegate-to-agy`. The Codex worker owns baseline capture, AGY invocation, independent diff review, validation, and bounded remediation; the coordinator does not accept AGY's response or terminal status as delivery evidence.
+- When the executor is Luna, authorize and record the one worker-owned executor layer described in `references/luna-executor.md`. The owning worker retains outcome accountability and independently verifies Luna's actual changes before returning its completion record.
 - For AGY, separate an economics-based hard cap from the per-loop convergence
   checkpoint. A user may deliberately authorize a higher cap for a lower-cost
   executor; continue only while new evidence shows progress and keep AGY and Codex

@@ -70,13 +70,41 @@ Record the actual capabilities of the Codex surface before the first pilot:
 | Spawn and manage subagents | Use one bounded coordinator-owned worker, retain its agent path, and monitor with bounded waits | Run the outcome directly only when it no longer needs a coordinator; otherwise stop |
 | Create and title independent tasks | Use only for a material user-owned lifecycle boundary; verify the returned independent task ID | Produce a prompt for the user to create manually; do not silently change topology |
 | Delegate implementation to AGY | Require an explicit `$delegate-to-agy` request, a clean linked worktree, one writer, and the installed skill's validated wrapper | Use Codex direct execution or stop; do not recreate the wrapper or silently send code externally |
-| Select model and reasoning effort | Omit overrides by default; pass explicit user choices through task creation | Record `default/inherited` |
+| Select model and reasoning effort | Resolve user choices, adopted project settings and skill role defaults; pass supported values through creation fields | Report unsupported settings or host selection requirements; use an already authorized alternative or obtain the missing choice, without silent fallback |
+| Delegate implementation to Luna | Require explicit executor and nested-topology authorization, supported child profile and an available agent slot | Wait for authorized capacity or report the limitation; do not add a layer or change executor automatically |
 | Monitor task state | Use bounded cursor-based waits or snapshots | Ask workers to update the durable tracker and check at explicit milestones |
 | Inventory current ownership | Use the active runtime's accepted query bound, known task IDs, Git state, and the durable tracker | Classify ownership as `unknown` and stop dispatch |
 | Create worktrees | Give every mutating worker a dedicated worktree | Run mutating outcomes serially in one exclusive checkout |
 | Use a durable tracker | Read and update the repository-declared system | Stop or use only an explicitly authorized local fallback |
 
 Missing capabilities must reduce the claimed workflow. Do not describe manual dispatch as automated orchestration or concurrent dispatch as actual parallel execution.
+
+## Role profiles and executor choice
+
+The [skill role table](../skills/task-conductor/SKILL.md#role-defaults) defines
+Worker `gpt-6-sol` / `high`, independent Reviewer `gpt-6-sol` / `xhigh`, and
+explicitly enabled Luna executor `gpt-6-luna` / `xhigh`. Keep the coordinator's
+current settings. Explicit user choices take precedence over user-adopted project
+role settings, then skill defaults; resolve model and effort separately and
+validate the resulting pair. Preserve profiles on same-outcome follow-ups.
+
+These defaults apply to authorized dispatches, subject to host/tool selection
+rules. They do not change global configuration or automatically create a reviewer
+or executor. A user may select inheritance instead. Record selected settings,
+their sources and observable actual settings, rather than assuming inheritance
+produced the requested profile.
+
+`Codex direct` remains the executor default. Enable Luna only on explicit user
+request, using the [Luna contract](../skills/task-conductor/references/luna-executor.md)
+for one worker-owned child with no further delegation and exclusive write
+ownership. AGY remains explicit opt-in with its existing external-disclosure
+boundary. Reuse the user's scoped choice across dispatches instead of asking on
+every outcome. Do not select or switch executors merely because one costs less.
+
+The profiles are quality-oriented starting settings, not a performance result.
+Validate representative outcomes before drawing cost or quality conclusions.
+
+## Ownership and continuity
 
 Independent tasks and background subagents are not interchangeable. Prefer a
 subagent for bounded automation within one delivery lifecycle: the coordinator can

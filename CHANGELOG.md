@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.1.9-preview - 2026-09-23
+
+### Changed
+
+- Default authorized workers to GPT-6 Sol / high and independent reviewers,
+  when needed, to GPT-6 Sol / xhigh; preserve the coordinator's current settings.
+- Resolve explicit user choices before adopted project role settings and skill
+  defaults, pass supported profiles through creation fields, and record selection
+  sources and observable actual settings without silent model substitution.
+- Keep Codex direct as the default executor and AGY explicitly opt-in.
+
+### Added
+
+- An explicitly enabled worker-owned Luna executor with GPT-6 Luna / xhigh as
+  its default profile, one child layer, shared slot accounting, exclusive write
+  handoff, independent worker verification and progress-based correction.
+- Consistent dispatch, adoption, completion and measurement guidance for role
+  profiles and executor attribution. No automatic reviewer, model escalation or
+  executor switching is introduced; these defaults are not an efficiency claim.
+
 ## v0.1.8-preview — 2026-09-09
 
 - Add an optional versioned JSON worker receipt and standard-library Python

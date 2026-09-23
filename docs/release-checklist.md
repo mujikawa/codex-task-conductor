@@ -239,6 +239,9 @@ remain omitted. No push, merge, PR, deployment, or cleanup occurred.
 
 ## Remaining preview blockers
 
+- The v0.1.9 role profiles and worker-owned Luna executor require a live forward
+  delivery pilot; instruction recognition alone does not establish delivery
+  quality, latency or cost.
 - A fresh case where a formal task already exists while bounded inventory omits it has not yet been reproduced.
 - The newly added single broad-gate owner, adaptive monitoring, finite
   reconciliation, and lifecycle-facet controls have not yet passed a clean
