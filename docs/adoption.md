@@ -82,7 +82,7 @@ Missing capabilities must reduce the claimed workflow. Do not describe manual di
 ## Role profiles and executor choice
 
 The [skill role table](../skills/task-conductor/SKILL.md#role-defaults) defines
-Worker `gpt-6-sol` / `high`, independent Reviewer `gpt-6-sol` / `xhigh`, and
+Worker `gpt-6.1-sol` / `high`, independent Reviewer `gpt-6.1-sol` / `xhigh`, and
 explicitly enabled Luna executor `gpt-6-luna` / `xhigh`. Keep the coordinator's
 current settings. Explicit user choices take precedence over user-adopted project
 role settings, then skill defaults; resolve model and effort separately and

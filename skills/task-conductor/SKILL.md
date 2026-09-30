@@ -100,8 +100,8 @@ Use `references/status-contract.md`. Treat agent paths, task IDs, and the live d
 | Role | Model | Reasoning effort |
 | --- | --- | --- |
 | Coordinator | Preserve the current task setting | Preserve the current task setting |
-| Worker, including an integration or Ops worker | `gpt-6-sol` | `high` |
-| Independent read-only reviewer, when required | `gpt-6-sol` | `xhigh` |
+| Worker, including an integration or Ops worker | `gpt-6.1-sol` | `high` |
+| Independent read-only reviewer, when required | `gpt-6.1-sol` | `xhigh` |
 | Luna executor, only when explicitly enabled | `gpt-6-luna` | `xhigh` |
 
 For each setting, explicit user choices take precedence over user-adopted project
