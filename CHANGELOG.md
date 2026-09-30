@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.1.10-preview - 2026-09-30
+
+### Changed
+
+- Update authorized worker and independent reviewer defaults to GPT-6.1 Sol,
+  preserving `high` and `xhigh` reasoning effort respectively.
+- Keep coordinator inheritance, Luna executor defaults, user/project overrides,
+  and existing agents' resolved profiles unchanged.
+- Align current adoption and installation guidance with this release; retain
+  historical release notes and measurements with their original model names.
+
 ## 0.1.9-preview - 2026-09-23
 
 ### Changed

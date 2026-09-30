@@ -20,7 +20,7 @@ The observation does not prove that a particular model or reasoning level caused
 
 ## Status
 
-This repository is the `v0.1.9-preview` release. The generic skill, adoption
+This repository is the `v0.1.10-preview` release. The generic skill, adoption
 guidance, MIT license, release checklist, two serial observational case studies,
 and seven field observations are present.
 
@@ -72,6 +72,7 @@ docs/
 ├── release-v0.1.5-preview.md
 ├── release-v0.1.8-preview.md
 ├── release-v0.1.9-preview.md
+├── release-v0.1.10-preview.md
 └── release-checklist.md
 
 CHANGELOG.md
@@ -106,7 +107,7 @@ For a reproducible release installation, ask:
 
 ```text
 Use $skill-installer to install skills/task-conductor from
-mujikawa/codex-task-conductor at ref v0.1.9-preview.
+mujikawa/codex-task-conductor at ref v0.1.10-preview.
 ```
 
 The installed skill will be available on your next turn. To check recognition, ask:
@@ -130,8 +131,8 @@ with `python -m unittest discover -s tests -v` from this repository.
 
 ## Role defaults and optional executors
 
-Authorized workers default to `gpt-6-sol` / `high`; independent read-only
-reviewers, when needed, default to `gpt-6-sol` / `xhigh`. The coordinator keeps its
+Authorized workers default to `gpt-6.1-sol` / `high`; independent read-only
+reviewers, when needed, default to `gpt-6.1-sol` / `xhigh`. The coordinator keeps its
 current settings. Explicit user choices override user-adopted project role
 settings, then the [skill defaults](skills/task-conductor/SKILL.md#role-defaults).
 Host/tool selection requirements still apply; unsupported profiles are reported
@@ -252,8 +253,9 @@ broad-gate owner, adaptive monitoring, finite reconciliation, and separate
 lifecycle facets.
 
 See the [release checklist](docs/release-checklist.md) before tagging or publishing a release.
-See the [v0.1.9-preview release notes](docs/release-v0.1.9-preview.md) for role
-profiles and the explicitly enabled Luna executor.
+See the [v0.1.10-preview release notes](docs/release-v0.1.10-preview.md) for the
+GPT-6.1 Sol role defaults and the [v0.1.9-preview notes](docs/release-v0.1.9-preview.md)
+for role profile precedence and the explicitly enabled Luna executor.
 See the [v0.1.5-preview release notes](docs/release-v0.1.5-preview.md) for the
 latest broad-gate ownership, monitoring, reconciliation, and cleanup guidance.
 The [v0.1.4-preview notes](docs/release-v0.1.4-preview.md),
